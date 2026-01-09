@@ -165,6 +165,7 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
               link: 'https://drive.google.com/file/d/1QeqqGizqAi7G6-27iRPrZ6aaY0b0rM84/view?usp=sharing'
             },
             {
+              
               title: 'Responsive Web Design',
               text: 'Professional certification for mastering modern layout techniques including CSS Grid, Flexbox, and mobile-first architecture.',
               link: 'https://drive.google.com/file/d/1oCGj4ripHJc4p2tdnZgn3sy_6vsEZOgI/view?usp=sharing'
