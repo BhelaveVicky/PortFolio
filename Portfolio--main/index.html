@@ -73,6 +73,15 @@
         to { opacity: 1; transform: scale(1); }
       }
 
+      .animate-page-flip {
+        transform-origin: left center;
+        animation: pageFlip 0.8s cubic-bezier(0.3, 1, 0.4, 1) forwards;
+      }
+      @keyframes pageFlip {
+        0% { transform: perspective(2500px) rotateY(-90deg) scale(0.9); opacity: 0; }
+        100% { transform: perspective(2500px) rotateY(0deg) scale(1); opacity: 1; }
+      }
+
       .animate-fade-in-right {
         animation: fadeInRight 0.6s ease-out;
       }

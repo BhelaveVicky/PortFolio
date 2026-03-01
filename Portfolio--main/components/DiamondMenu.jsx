@@ -12,19 +12,43 @@ const DiamondMenu = ({ items, onSelect }) => {
   ];
 
   const [selectedId, setSelectedId] = React.useState(null);
+  const [rotatingId, setRotatingId] = React.useState(null);
 
   const handleSelect = (id) => {
     setSelectedId(id);
-    onSelect(id);
+    setRotatingId(id);
+    // Wait for animation to finish before opening content
+    setTimeout(() => {
+      onSelect(id);
+      setRotatingId(null);
+    }, 800);
   };
 
   return (
     <div>
+      <style>{`
+        @keyframes spin-open {
+          0% { transform: scale(1) rotate(0deg); }
+          50% { transform: scale(0.9) rotate(180deg); opacity: 0.8; }
+          100% { transform: scale(3) rotate(360deg); opacity: 0; }
+        }
+        .animate-spin-open {
+          animation: spin-open 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+          z-index: 50 !important;
+        }
+      `}</style>
+
       <div className="lg:hidden w-fit mx-auto my-20 p-2 scale-900 mb-8">
         <div className="grid grid-cols-3 gap-9">
           {items.slice(0, 6).map((item) => (
             <div key={item.id} className="w-20 h-20 sm:w-24 sm:h-24 shadow-2xl">
-              <DiamondItem item={item} onSelect={handleSelect} selected={selectedId === item.id} rotate={false} />
+              <DiamondItem 
+                item={item} 
+                onSelect={handleSelect} 
+                selected={selectedId === item.id} 
+                rotate={false}
+                isRotating={rotatingId === item.id} 
+              />
             </div>
           ))}
         </div>
@@ -40,7 +64,12 @@ const DiamondMenu = ({ items, onSelect }) => {
               left: positions[idx].left,
             }}
           >
-            <DiamondItem item={item} onSelect={handleSelect} selected={selectedId === item.id} />
+            <DiamondItem 
+              item={item} 
+              onSelect={handleSelect} 
+              selected={selectedId === item.id}
+              isRotating={rotatingId === item.id}
+            />
           </div>
         ))}
       </div>
@@ -48,14 +77,14 @@ const DiamondMenu = ({ items, onSelect }) => {
   );
 };
 
-const DiamondItem = ({ item, onSelect, selected = false, rotate = true }) => {
+const DiamondItem = ({ item, onSelect, selected = false, rotate = true, isRotating = false }) => {
   const Icon = item.icon;
   const colorClass = selected ? 'text-black dark:text-white' : 'text-white';
   return (
     <button
       onClick={() => onSelect(item.id)}
       aria-pressed={selected}
-      className="group relative w-full h-full transform transition-all duration-300 hover:scale-105 active:scale-95 z-10"
+      className={`group relative w-full h-full transform transition-all duration-300 hover:scale-105 active:scale-95 z-10 ${isRotating ? 'animate-spin-open pointer-events-none' : ''}`}
     >
       <div className={`absolute inset-0 ${rotate ? 'rotate-45 scale-[0.71]' : 'rotate-0'} rounded-[12%] bg-gradient-to-br ${item.color} flex items-center justify-center overflow-hidden shadow-lg border border-white/10`}>
         <div className={`-rotate-45 flex flex-col items-center justify-center p-1 ${colorClass}`}>

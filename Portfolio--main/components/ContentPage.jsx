@@ -112,17 +112,20 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
             {
               title: 'Multiplayer Typing Game',
               text: 'Developed a real-time multiplayer typing race game where users can create or join rooms using a 4-character code. Implemented live database syncing for accurate WPM and accuracy tracking. Added host controls for starting races and automatic winner detection. Built with a fully responsive UI for smooth mobile and desktop experience.',
-              link: 'https://typo-dash.vercel.app/'
+              link: 'https://typo-dash.vercel.app/',
+              image: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1171&q=80'
             },
             {
               title: 'BrainQuest – Puzzle Web App',
               text: 'Created an interactive puzzle platform containing guessing games, logic puzzles, and tic-tac-toe. Designed a clean, simple, and highly responsive interface for all devices. Focused on smooth user experience, fast performance, and engaging gameplay. Hosted on Vercel for reliable and fast deployment.',
-              link: 'https://puzzel-one.vercel.app/'
+              link: 'https://puzzel-one.vercel.app/',
+              image: 'https://images.unsplash.com/photo-1611996900188-3021b1977d24?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80'
             },
             {
               title: 'Chess Game – 2-Player Web Application',
               text: 'Built a fully interactive chess game supporting two players on the same device. Added multiple time controls (5, 10, 15 minutes and ∞ mode) with a glowing active timer. Implemented animated highlights for selected squares, legal moves, captures, and check alerts. Included move sounds, winner popup, and auto-promotion of pawns to queens for faster gameplay.',
-              link: 'https://chess-game-bw7l.vercel.app/'
+              link: 'https://chess-game-bw7l.vercel.app/',
+              image: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1171&q=80'
             }
           ]
         };
@@ -135,14 +138,14 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
           description: 'My academic background and professional growth journey.',
           points: [
             {
-              title: 'Web Development Course',
-              subtitle: 'Navgurukul | Himachal Pradesh',
-              date: 'July 2025 - Present'
+              title: 'Course',
+              subtitle: 'Web Development Course || Duration: 15 month || During this Course, I learned javascript problem-solving skills and deepened my understanding of the language.',
+              date: '2024'
             },
             {
-              title: 'Secondary Education',
-              subtitle: 'Z.P. High School & Jr. College, Tirora',
-              date: 'June 2024 - April 2025'
+              title: 'University',
+              subtitle: 'Maharshi Dayanand Saraswati University | Ajmer',
+              date: '2024'
             }
           ]
         };
@@ -214,7 +217,7 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
   const resumeDownloadLink = "https://drive.google.com/uc?export=download&id=1gnwkXURTR_Qq6XlVxpKRj37ot5_7HRZl";
 
   return (
-    <div className={`fixed inset-0 z-[100] flex items-center justify-center ${sectionId === 'contact' ? 'p-0' : 'p-4 md:p-8'}`}>
+    <div className={`fixed inset-0 z-[100] flex items-center justify-center ${sectionId === 'contact' || sectionId === 'project' || sectionId === 'education' ? 'p-0' : 'p-4 md:p-8'}`}>
       <div
         className="absolute inset-0 bg-slate-950/95 backdrop-blur-xl"
         onClick={onClose}
@@ -222,11 +225,13 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
 
       <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vmin] h-[40vmin] md:w-[600px] md:h-[600px] rounded-full blur-[100px] md:blur-[140px] opacity-12 md:opacity-20 ${data.glow}`} />
 
-      <div className={`modal-responsive relative overflow-hidden flex flex-col animate-scale-up shadow-2xl ${sectionId === 'contact'
+      <div className={`modal-responsive relative overflow-hidden flex flex-col animate-page-flip shadow-2xl ${sectionId === 'contact'
         ? 'w-full h-full rounded-none p-4 sm:p-6 md:p-14 bg-[#fcfcfc] text-slate-800'
-        : 'w-full max-w-full sm:max-w-2xl md:max-w-4xl h-[92vh] sm:h-[90vh] md:h-[85vh] rounded-xl sm:rounded-[2rem] md:rounded-[2.5rem] p-4 sm:p-6 md:p-14 bg-black border border-white/10 text-white'
+        : sectionId === 'project' || sectionId === 'education'
+          ? 'w-full h-full rounded-none p-0 bg-[#f8f9fa] text-slate-900 border-0'
+          : 'w-full max-w-full sm:max-w-2xl md:max-w-4xl h-[92vh] sm:h-[90vh] md:h-[85vh] rounded-xl sm:rounded-[2rem] md:rounded-[2.5rem] p-4 sm:p-6 md:p-14 bg-black border border-white/10 text-white'
         }`}>
-        <div className={`absolute inset-0 rounded-[2.5rem] pointer-events-none z-0 md:z-0`}>
+        <div className={`absolute inset-0 ${sectionId === 'project' || sectionId === 'education' ? 'hidden' : 'rounded-[2.5rem] pointer-events-none z-0 md:z-0'}`}>
           <div className={`absolute inset-0 bg-gradient-to-br ${data.color} opacity-[0.03] md:opacity-[0.05] blur-[6px]`} />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.02),transparent)] md:opacity-40 opacity-0" />
         </div>
@@ -246,10 +251,12 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
           </div>
         )}
 
-        <div className="flex justify-between items-center mb-8 mt-4 shrink-0 z-20 relative">
+        <div className={`flex justify-between items-center shrink-0 z-50 absolute top-0 left-0 w-full px-4 md:px-14 py-4 md:py-6 transition-all ${
+          ['project', 'contact', 'education'].includes(sectionId) ? 'bg-[#f8f9fa]/90 backdrop-blur-md shadow-[0_4px_20px_rgb(0,0,0,0.03)] pointer-events-auto border-b border-slate-200/50' : 'pointer-events-none mt-4 md:mt-8'
+        }`}>
           <button
             onClick={onClose}
-            className={`flex items-center gap-3 border transition-all group px-5 py-2.5 rounded-full shadow-lg backdrop-blur-sm ${sectionId === 'contact'
+            className={`flex items-center gap-3 border transition-all pointer-events-auto group px-5 py-2.5 rounded-full shadow-lg backdrop-blur-sm ${['contact', 'project', 'education'].includes(sectionId)
               ? 'bg-black/5 text-slate-800 border-black/10 hover:bg-black/10 hover:border-black/20'
               : 'text-white bg-white/10 border-white/5 hover:bg-white/20 hover:border-white/20'
               }`}
@@ -258,24 +265,26 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
             <span className="font-bold uppercase tracking-[0.2em] text-[10px]">Back</span>
           </button>
 
-          <button onClick={onClose} className={`p-3 border rounded-full transition-all shadow-lg backdrop-blur-sm ${sectionId === 'contact' ? 'bg-black/5 text-slate-800 border-black/10 hover:bg-black/10 hover:border-black/20' : 'text-white bg-white/10 border-white/5 hover:bg-white/20 hover:border-white/20'}`}>
+          {/* Centered Title for Full Page Sections */}
+          {['project', 'contact', 'education'].includes(sectionId) && (
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none w-[70%]">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#1a1f36] tracking-tight">
+                {sectionId === 'project' ? 'Featured Projects' : sectionId === 'education' ? 'My Education' : <span className="text-slate-900">Contact <span className="text-[#0891b2]">Us</span></span>}
+              </h2>
+              <p className="text-[10px] sm:text-xs md:text-sm text-slate-500 font-medium hidden sm:block mt-0.5 md:mt-1">
+                {sectionId === 'project' ? 'Here are some of my recent web development projects.' : sectionId === 'education' ? 'My academic background and professional growth journey.' : 'Have any questions? I’m happy to help—just drop a message.'}
+              </p>
+            </div>
+          )}
+
+          <button onClick={onClose} className={`p-3 border rounded-full pointer-events-auto transition-all shadow-lg backdrop-blur-sm ${['contact', 'project', 'education'].includes(sectionId) ? 'bg-black/5 text-slate-800 border-black/10 hover:bg-black/10 hover:border-black/20' : 'text-white bg-white/10 border-white/5 hover:bg-white/20 hover:border-white/20'}`}>
             <X size={24} />
           </button>
         </div>
 
-        {/* Title for Contact Section */}
-        {sectionId === 'contact' && (
-          <div className="absolute top-0 left-0 w-full text-center pt-5 z-0 pointer-events-none">
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-2">
-              Contact <span className="text-[#0891b2]">Us</span>
-            </h2>
-            <p className="text-slate-500 font-medium text-sm md:text-base">Have any questions? I’m happy to help—just drop a message.</p>
-          </div>
-        )}
-
-        <div className="flex-1 overflow-y-auto custom-scroll pr-2 md:pr-6 relative z-20">
+        <div className={`flex-1 overflow-y-auto custom-scroll relative z-20 ${['project', 'education'].includes(sectionId) ? 'p-0 w-full h-full bg-[#f8f9fa]' : 'pr-2 md:pr-6 p-4 md:p-14 pt-20 md:pt-28'}`}>
           {sectionId === 'contact' ? (
-            <div className="flex flex-col h-full pt-4 md:pt-0">
+            <div className="flex flex-col h-full pt-16 md:pt-20 max-w-7xl mx-auto w-full">
 
 
               <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
@@ -402,22 +411,101 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
                 </div>
               </div>
             </div>
-          ) : (
-            <div className="flex flex-col gap-12">
-              <div className="flex flex-col md:flex-row gap-8 items-start">
-                <div className={`w-20 h-20 md:w-24 md:h-24 rounded-3xl bg-gradient-to-br ${data.color} flex items-center justify-center shadow-[0_0_30px_rgba(59,130,246,0.3)] shrink-0`}>
-                  <Icon size={44} className={isDarkMode ? 'text-white' : 'text-white'} />
-                </div>
-                <div className="flex-1">
-                  <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tighter mb-4 leading-tight">
-                    {data.title}
-                  </h2>
-                  <p className="text-slate-400 text-base md:text-lg max-w-3xl font-light leading-relaxed">
-                    {data.description}
-                  </p>
+          ) : sectionId === 'project' ? (
+            <div className="flex flex-col min-h-screen w-full items-center pt-28 md:pt-36 px-6">
+              <div className="w-full flex-1 px-4 lg:px-12 2xl:px-24 mt-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8 w-full mx-auto pb-32">
+                  {data.points.map((item, i) => (
+                    <div key={i} className="group flex flex-col bg-white rounded-2xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] transition-all duration-500 border border-slate-100 hover:-translate-y-2 h-full">
+                      {/* Project Image */}
+                      <div className="w-full h-48 sm:h-56 xl:h-64 bg-slate-100 relative overflow-hidden border-b border-slate-100 p-3 pt-6">
+                        {item.image ? (
+                          <div className="w-full h-full rounded-t-xl overflow-hidden shadow-md">
+                            <img 
+                              src={item.image} 
+                              alt={item.title} 
+                              className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
+                            />
+                          </div>
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-slate-300 bg-slate-50 rounded-t-xl">
+                            <Layers size={64} strokeWidth={1} />
+                          </div>
+                        )}
+                      </div>
+                      
+                      {/* Project Content */}
+                      <div className="flex flex-col flex-1 p-6 md:p-8 bg-white z-10 relative">
+                        <h3 className="text-xl xl:text-2xl font-bold text-[#1a1f36] mb-3 line-clamp-1">
+                          {item.title}
+                        </h3>
+                        
+                        <p className="text-slate-500 text-sm xl:text-base leading-relaxed mb-6 flex-1 line-clamp-3">
+                          {item.text}
+                        </p>
+
+                        {/* Action Buttons */}
+                        <div className="flex gap-4 sm:gap-6 mt-auto">
+                          {item.githubLink ? (
+                             <a 
+                              href={item.githubLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex-1 text-center py-3.5 px-6 rounded-xl bg-white border-2 border-slate-200 text-[#3b5998] font-bold text-base xl:text-lg hover:border-[#3b5998] hover:bg-blue-50/50 transition-all active:scale-95"
+                            >
+                              View Code
+                            </a>
+                          ) : (
+                             <button 
+                              disabled
+                              className="flex-1 text-center py-3.5 px-6 rounded-xl bg-slate-50 border-2 border-slate-200 text-slate-400 font-bold text-base xl:text-lg cursor-not-allowed opacity-70"
+                            >
+                              View Code
+                            </button>
+                          )}
+
+                          {item.link ? (
+                            <a 
+                              href={item.link} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="flex-1 text-center py-3.5 px-6 rounded-xl bg-[#3b5998] hover:bg-[#2d4373] text-white font-bold text-base xl:text-lg transition-all shadow-lg hover:shadow-xl hover:shadow-[#3b5998]/20 active:scale-95"
+                            >
+                              Live Demo
+                            </a>
+                          ) : (
+                            <button 
+                              disabled
+                              className="flex-1 text-center py-3.5 px-6 rounded-xl bg-slate-300 text-white font-bold text-base xl:text-lg cursor-not-allowed"
+                            >
+                              Live Demo
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-
+            </div>
+          ) : (
+            <div className="flex flex-col gap-12">
+              {sectionId !== 'education' && (
+                <div className="flex flex-col md:flex-row gap-8 items-start">
+                  <div className={`w-20 h-20 md:w-24 md:h-24 rounded-3xl bg-gradient-to-br ${data.color} flex items-center justify-center shadow-[0_0_30px_rgba(59,130,246,0.3)] shrink-0`}>
+                    <Icon size={44} className={isDarkMode ? 'text-white' : 'text-white'} />
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tighter mb-4 leading-tight">
+                      {data.title}
+                    </h2>
+                    <p className="text-slate-400 text-base md:text-lg max-w-3xl font-light leading-relaxed">
+                      {data.description}
+                    </p>
+                  </div>
+                </div>
+              )}
+              
               {sectionId === 'about' ? (
                 <div className="mt-8 pb-12 w-full flex justify-center">
                   <div className="flex flex-wrap justify-center gap-6 mt-6">
@@ -446,20 +534,133 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
                 // Contact logic is now handled in the top conditional block
                 null
               ) : sectionId === 'education' ? (
-                <div className="flex flex-col gap-10 mt-10 pb-16 items-center w-full">
-                  {data.points.map((item, i) => (
-                    <div key={i} className="w-full max-w-2xl relative group">
-                      <div className="relative w-full bg-gradient-to-br from-teal-900/40 via-emerald-950/40 to-black rounded-[2.5rem] py-14 px-10 flex flex-col items-center justify-center text-center border-2 border-teal-500/30 shadow-[0_0_40px_rgba(45,212,191,0.15)] hover:border-teal-400/60 transition-all duration-500 overflow-hidden">
-                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(45,212,191,0.1),transparent)]" />
+                <div className="flex flex-col min-h-screen w-full items-center pt-24 md:pt-32 px-4 md:px-8 pb-20">
+                  {/* Hero Section */}
+                  <div className="w-full max-w-[1100px] mx-auto mb-16 bg-transparent rounded-[2.5rem] md:rounded-[3.5rem] py-12 px-6 md:px-16 flex flex-col items-center justify-center relative overflow-hidden">
+                    {/* Background Sparkles */}
+                    <div className="absolute top-10 left-32 text-red-300 font-bold text-lg md:text-xl opacity-60">●</div>
+                    <div className="absolute top-20 left-12 text-emerald-300 font-bold text-2xl md:text-3xl opacity-60">+</div>
+                    <div className="absolute top-16 right-1/4 text-blue-300 font-bold text-xl md:text-2xl opacity-60">+</div>
+                    <div className="absolute bottom-16 right-32 text-red-300 font-bold text-lg md:text-xl opacity-60">●</div>
+                    <div className="absolute bottom-12 left-16 text-emerald-300 font-bold text-2xl md:text-3xl opacity-60">+</div>
+                    <div className="absolute bottom-20 left-1/3 text-blue-400 font-bold text-lg md:text-xl opacity-60">★</div>
+                    <div className="absolute top-24 right-24 text-blue-400 font-bold text-lg md:text-xl opacity-60">★</div>
+                    <div className="absolute top-12 right-12 text-emerald-300 font-bold text-2xl md:text-3xl opacity-60">+</div>
+                    <div className="absolute bottom-1/3 right-12 text-red-300 font-bold text-lg md:text-xl opacity-60">●</div>
 
-                        <h3 className="relative z-10 text-teal-400 text-3xl md:text-4xl lg:text-5xl font-black mb-5 tracking-tight leading-tight group-hover:scale-105 transition-transform">{item.title}</h3>
-                        <div className="relative z-10 space-y-3">
-                          <p className="text-slate-300 text-xl md:text-2xl font-semibold tracking-tight leading-snug">{item.subtitle}</p>
-                          <p className="text-teal-500/70 text-lg md:text-xl font-bold uppercase tracking-widest">{item.date}</p>
-                        </div>
+                    {/* Illustration */}
+                    <div className="w-full md:w-[60%] flex justify-center relative z-10">
+                      <svg viewBox="0 25 400 250" className="w-[85%] sm:w-[70%] md:w-[85%] drop-shadow-xl z-20 mt-[-10px]">
+                        {/* Diploma */}
+                        <g transform="translate(30, 140) rotate(-22)">
+                          <rect x="0" y="0" width="300" height="40" rx="3" fill="#f4f5f5" />
+                          <rect x="0" y="0" width="25" height="40" rx="3" fill="#e8eced" />
+                          {/* Ribbon body */}
+                          <rect x="75" y="-5" width="22" height="50" fill="#f35627" />
+                          {/* Ribbon tails */}
+                          <polygon points="75,45 82,75 97,45" fill="#db471b" />
+                          <polygon points="86,45 97,80 107,45" fill="#f35627" />
+                        </g>
+
+                        {/* Cap Base Front Flap */}
+                        <path d="M 115 125 L 115 195 C 115 225, 305 225, 305 195 L 305 125 Z" fill="#126fb2" />
+                        <path d="M 110 125 C 110 160, 310 160, 310 125 Z" fill="#0c568c" />
+
+                        {/* Cap Top Rhombus */}
+                        <polygon points="210,40 390,105 210,165 30,105" fill="#0f4577" />
+
+                        {/* Tassel Button and String */}
+                        <circle cx="210" cy="105" r="5" fill="#083057" />
+                        <path d="M 300 95 Q 303 130 305 145" fill="none" stroke="#f1f5f9" strokeWidth="3" />
+                        {/* Tassel Bulb */}
+                        <circle cx="306" cy="150" r="14" fill="#f8fafc" />
+                        <path d="M 296 150 L 316 150" stroke="#cbd5e1" strokeWidth="1" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* Education Timeline */}
+                  <div className="w-full flex-1 px-4 lg:px-12 2xl:px-24">
+                    <div className="relative max-w-5xl mx-auto pb-32 mt-10">
+                      {/* Vertical Center Line */}
+                      <div className="absolute left-6 md:left-1/2 md:-translate-x-1/2 top-4 bottom-0 w-1 bg-[#ff8c42]" />
+
+                      <div className="flex flex-col gap-12 md:gap-24">
+                        {data.points.map((item, i) => {
+                          const isLeft = i % 2 === 0;
+
+                          return (
+                            <div key={i} className="flex w-full relative">
+                              {/* Desktop Layout */}
+                              <div className="hidden md:flex w-full items-center justify-between">
+                                {isLeft ? (
+                                  <>
+                                    {/* Left Content */}
+                                    <div className="w-[45%] flex flex-col items-end relative pt-4">
+                                      <span className="absolute -right-16 -top-6 text-[#5b6b7c] font-semibold text-sm">{item.date}</span>
+                                      
+                                      {/* Horizontal Connector Line Right */}
+                                      <div className="absolute -right-[6.5%] top-14 w-[12%] h-[3px] bg-[#fb923c] z-0" />
+
+                                      <div className="w-full bg-[#f6f7f8] border-[2px] border-[#fb923c] rounded-[2rem] p-10 shadow-[0_0_40px_-5px_rgba(251,146,60,0.3)] text-right relative z-10 hover:-translate-y-1 transition-transform">
+                                        <h3 className="text-2xl md:text-3xl font-black text-[#2d3748] italic mb-6 tracking-tight">{item.title}</h3>
+                                        <p className="text-[#4e5d78] text-[17px] leading-[1.8] font-medium max-w-[85%] ml-auto">
+                                          {item.subtitle}
+                                        </p>
+                                      </div>
+                                    </div>
+                                    <div className="w-[10%] flex justify-center relative">
+                                        {/* Central Node */}
+                                        <div className="w-[20px] h-[20px] bg-[#fb923c] rounded-full shadow-[0_0_15px_4px_rgba(251,146,60,0.5)] z-20 absolute top-[3.2rem]" />
+                                    </div>
+                                    <div className="w-[45%]" />
+                                  </>
+                                ) : (
+                                  <>
+                                    <div className="w-[45%]" />
+                                    <div className="w-[10%] flex justify-center relative">
+                                        {/* Central Node */}
+                                        <div className="w-[20px] h-[20px] bg-[#fb923c] rounded-full shadow-[0_0_15px_4px_rgba(251,146,60,0.5)] z-20 absolute top-[3.2rem]" />
+                                    </div>
+                                    {/* Right Content */}
+                                    <div className="w-[45%] flex flex-col items-start relative pt-4">
+                                      <span className="absolute -left-16 -top-6 text-[#5b6b7c] font-semibold text-sm">{item.date}</span>
+                                      
+                                      {/* Horizontal Connector Line Left */}
+                                      <div className="absolute -left-[6.5%] top-14 w-[12%] h-[3px] bg-[#fb923c] z-0" />
+
+                                      <div className="w-full bg-[#f6f7f8] border-[2px] border-[#fb923c] rounded-[2rem] p-10 shadow-[0_0_40px_-5px_rgba(251,146,60,0.3)] text-left relative z-10 hover:-translate-y-1 transition-transform">
+                                        <h3 className="text-2xl md:text-3xl font-black text-[#2d3748] italic mb-6 tracking-tight">{item.title}</h3>
+                                        <p className="text-[#4e5d78] text-[17px] leading-[1.8] font-medium max-w-[85%]">
+                                          {item.subtitle}
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </>
+                                )}
+                              </div>
+
+                              {/* Mobile Layout */}
+                              <div className="md:hidden flex w-full items-start pl-12 relative pt-2">
+                                <span className="absolute left-[3.2rem] -top-5 text-[#5b6b7c] font-semibold text-xs">{item.date}</span>
+                                <div className="absolute left-[18px] top-12 w-[15px] h-[15px] bg-[#fb923c] rounded-full shadow-[0_0_15px_4px_rgba(251,146,60,0.5)] z-20" />
+                                
+                                {/* Mobile Horizontal Connector */}
+                                <div className="absolute left-[28px] top-[54px] w-[1rem] h-[3px] bg-[#fb923c] z-10" />
+
+                                <div className="w-full bg-[#f6f7f8] border-[2px] border-[#fb923c] rounded-[1.5rem] p-6 shadow-[0_0_30px_-5px_rgba(251,146,60,0.2)] mt-0 relative z-10">
+                                  <h3 className="text-xl font-black text-[#2d3748] italic mb-4">{item.title}</h3>
+                                  <p className="text-[#4e5d78] text-[15px] leading-relaxed font-medium">
+                                    {item.subtitle}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
-                  ))}
+                  </div>
                 </div>
               ) : sectionId === 'skill' ? (
                 <div className="flex flex-col gap-16 mt-10 pb-16 w-full">
@@ -481,6 +682,81 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
                       </div>
                     </div>
                   ))}
+                </div>
+              ) : sectionId === 'project' ? (
+                <div className="w-full">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-[1400px] mx-auto pb-20">
+                    {data.points.map((item, i) => (
+                      <div key={i} className="group flex flex-col bg-white rounded-xl overflow-hidden shadow-[0_4px_24px_rgb(0,0,0,0.06)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-300 border border-slate-100 hover:-translate-y-1">
+                        {/* Project Image */}
+                        <div className="w-full h-48 sm:h-64 bg-slate-100 relative overflow-hidden border-b border-slate-100 p-2 pt-4">
+                          {item.image ? (
+                            <div className="w-full h-full rounded-t-lg overflow-hidden shadow-sm">
+                              <img 
+                                src={item.image} 
+                                alt={item.title} 
+                                className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
+                              />
+                            </div>
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-slate-300 bg-slate-50 rounded-t-lg">
+                              <Layers size={48} strokeWidth={1} />
+                            </div>
+                          )}
+                        </div>
+                        
+                        {/* Project Content */}
+                        <div className="flex flex-col flex-1 p-6 md:p-8 bg-white z-10 relative">
+                          <h3 className="text-xl font-bold text-[#1a1f36] mb-3 line-clamp-1">
+                            {item.title}
+                          </h3>
+                          
+                          <p className="text-slate-500 text-[15px] leading-relaxed mb-8 flex-1 line-clamp-3">
+                            {item.text}
+                          </p>
+
+                          {/* Action Buttons */}
+                          <div className="flex gap-4 mt-auto">
+                            {item.githubLink ? (
+                               <a 
+                                href={item.githubLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex-1 text-center py-2.5 px-4 rounded-[6px] bg-white border border-slate-300 text-[#3b5998] font-semibold text-sm hover:border-[#3b5998] hover:bg-blue-50 transition-colors"
+                              >
+                                View Code
+                              </a>
+                            ) : (
+                               <button 
+                                disabled
+                                className="flex-1 text-center py-2.5 px-4 rounded-[6px] bg-white border border-slate-200 text-slate-400 font-semibold text-sm cursor-not-allowed opacity-60"
+                              >
+                                View Code
+                              </button>
+                            )}
+
+                            {item.link ? (
+                              <a 
+                                href={item.link} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="flex-1 text-center py-2.5 px-4 rounded-[6px] bg-[#3b5998] hover:bg-[#314a7e] text-white font-semibold text-sm transition-colors shadow-sm"
+                              >
+                                Live Demo
+                              </a>
+                            ) : (
+                              <button 
+                                disabled
+                                className="flex-1 text-center py-2.5 px-4 rounded-[6px] bg-slate-300 text-white font-semibold text-sm cursor-not-allowed"
+                              >
+                                Live Demo
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ) : (
                 <div className="flex flex-col gap-10 mt-4 pb-12">
