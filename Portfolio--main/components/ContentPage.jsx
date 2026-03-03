@@ -1,5 +1,37 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowLeft, User, Code2, Layers, GraduationCap, Mail, X, Send, Award, ChevronRight, ExternalLink, CheckCircle2, Calendar, MapPin, Download, Eye, Phone, Facebook, Instagram, Linkedin, Twitter, Map, Github, MessageCircle } from 'lucide-react';
+import { ArrowLeft, User, Code2, Layers, GraduationCap, Mail, X, Send, Award, ChevronRight, ExternalLink, CheckCircle2, Calendar, MapPin, Download, Eye, Phone, Facebook, Instagram, Linkedin, Twitter, Map, Github, MessageCircle, Cpu, FileCode, Palette, Monitor, Terminal, Table, ImageIcon, Grid, UploadCloud } from 'lucide-react';
+
+const TypewriterText = ({ text, delay = 0, speed = 30 }) => {
+  const [displayedText, setDisplayedText] = useState("");
+
+  useEffect(() => {
+    let timeout;
+    
+    const startTimeout = setTimeout(() => {
+      let currentIndex = 0;
+      let currentString = "";
+      setDisplayedText("");
+      
+      const typeChar = () => {
+        if (currentIndex < text.length) {
+          currentString += text[currentIndex];
+          setDisplayedText(currentString);
+          currentIndex++;
+          timeout = setTimeout(typeChar, speed);
+        }
+      };
+      
+      typeChar();
+    }, delay);
+
+    return () => {
+      clearTimeout(startTimeout);
+      clearTimeout(timeout);
+    };
+  }, [text, delay, speed]);
+
+  return <>{displayedText || "\u00A0"}</>;
+};
 
 const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
   const [formData, setFormData] = useState({
@@ -138,14 +170,14 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
           description: 'My academic background and professional growth journey.',
           points: [
             {
-              title: 'Course',
-              subtitle: 'Web Development Course || Duration: 15 month || During this Course, I learned javascript problem-solving skills and deepened my understanding of the language.',
-              date: '2024'
+              title: 'Software Development Course',
+              subtitle: 'Navgurukul Foundation | Himachal Pradesh',
+              date: 'JULY 2025 - PRESENT'
             },
             {
-              title: 'University',
-              subtitle: 'Maharshi Dayanand Saraswati University | Ajmer',
-              date: '2024'
+              title: 'Secondary School Certificate ',
+              subtitle: 'Z.P. High School & Jr. College, Tirora',
+              date: 'June 2024 - April 2025'
             }
           ]
         };
@@ -160,28 +192,32 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
             {
               title: 'GenAI with AWS',
               text: 'Advanced certification covering Generative AI fundamentals and implementation on AWS infrastructure.',
-              link: 'https://drive.google.com/file/d/1s6CYZojMYmSrDsdV2MkA2wAfyde30xV6/view?usp=sharing'
+              link: 'https://drive.google.com/file/d/1s6CYZojMYmSrDsdV2MkA2wAfyde30xV6/view?usp=sharing',
+              image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80'
             },
             {
               title: 'Google Cloud',
               text: 'Certification validating proficiency in Google Cloud Platform services and core cloud computing concepts.',
-              link: 'https://drive.google.com/file/d/1QeqqGizqAi7G6-27iRPrZ6aaY0b0rM84/view?usp=sharing'
+              link: 'https://drive.google.com/file/d/1QeqqGizqAi7G6-27iRPrZ6aaY0b0rM84/view?usp=sharing',
+              image: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&auto=format&fit=crop&w=1169&q=80'
             },
             {
-              
               title: 'Responsive Web Design',
               text: 'Professional certification for mastering modern layout techniques including CSS Grid, Flexbox, and mobile-first architecture.',
-              link: 'https://drive.google.com/file/d/1oCGj4ripHJc4p2tdnZgn3sy_6vsEZOgI/view?usp=sharing'
+              link: 'https://drive.google.com/file/d/1oCGj4ripHJc4p2tdnZgn3sy_6vsEZOgI/view?usp=sharing',
+              image: 'https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80'
             },
             {
               title: 'HTML Developer Certificate',
               text: 'Certification validating expertise in semantic HTML5, web accessibility, and document structure best practices.',
-              link: 'https://drive.google.com/file/d/1_Jolp6D_3nAjcqi87a3R_f8gTrEEIFQ8/view?usp=sharing'
+              link: 'https://drive.google.com/file/d/1_Jolp6D_3nAjcqi87a3R_f8gTrEEIFQ8/view?usp=sharing',
+              image: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80'
             },
             {
               title: 'CSS Developer Certificate',
               text: 'Credential for advanced CSS styling, animations, and efficient UI design patterns.',
-              link: 'https://drive.google.com/file/d/14hBslmZUmGPy_C6dejzvekHe3hOLWEz6/view?usp=sharing'
+              link: 'https://drive.google.com/file/d/14hBslmZUmGPy_C6dejzvekHe3hOLWEz6/view?usp=sharing',
+              image: 'https://images.unsplash.com/photo-1505685296765-3a2736de412f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80'
             }
           ]
         };
@@ -217,7 +253,7 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
   const resumeDownloadLink = "https://drive.google.com/uc?export=download&id=1gnwkXURTR_Qq6XlVxpKRj37ot5_7HRZl";
 
   return (
-    <div className={`fixed inset-0 z-[100] flex items-center justify-center ${sectionId === 'contact' || sectionId === 'project' || sectionId === 'education' ? 'p-0' : 'p-4 md:p-8'}`}>
+    <div className={`fixed inset-0 z-[100] flex items-center justify-center p-0`}>
       <div
         className="absolute inset-0 bg-slate-950/95 backdrop-blur-xl"
         onClick={onClose}
@@ -225,66 +261,54 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
 
       <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vmin] h-[40vmin] md:w-[600px] md:h-[600px] rounded-full blur-[100px] md:blur-[140px] opacity-12 md:opacity-20 ${data.glow}`} />
 
-      <div className={`modal-responsive relative overflow-hidden flex flex-col animate-page-flip shadow-2xl ${sectionId === 'contact'
-        ? 'w-full h-full rounded-none p-4 sm:p-6 md:p-14 bg-[#fcfcfc] text-slate-800'
-        : sectionId === 'project' || sectionId === 'education'
-          ? 'w-full h-full rounded-none p-0 bg-[#f8f9fa] text-slate-900 border-0'
-          : 'w-full max-w-full sm:max-w-2xl md:max-w-4xl h-[92vh] sm:h-[90vh] md:h-[85vh] rounded-xl sm:rounded-[2rem] md:rounded-[2.5rem] p-4 sm:p-6 md:p-14 bg-black border border-white/10 text-white'
-        }`}>
-        <div className={`absolute inset-0 ${sectionId === 'project' || sectionId === 'education' ? 'hidden' : 'rounded-[2.5rem] pointer-events-none z-0 md:z-0'}`}>
+      <div className={`modal-responsive relative overflow-hidden flex flex-col animate-page-flip shadow-2xl w-full h-full rounded-none p-0 ${isDarkMode ? 'bg-[#00040a] text-white' : 'bg-[#fcfcfc] text-slate-900'} border-0`}>
+        <div className={`absolute inset-0 hidden`}>
           <div className={`absolute inset-0 bg-gradient-to-br ${data.color} opacity-[0.03] md:opacity-[0.05] blur-[6px]`} />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.02),transparent)] md:opacity-40 opacity-0" />
         </div>
 
         {/* Success Message Overlay */}
         {showSuccess && (
-          <div className="absolute inset-0 z-50 flex items-center justify-center bg-white/95 backdrop-blur-md animate-fade-in transition-all">
+          <div className={`absolute inset-0 z-50 flex items-center justify-center ${isDarkMode ? 'bg-black/95' : 'bg-white/95'} backdrop-blur-md animate-fade-in transition-all`}>
             <div className="flex flex-col items-center gap-6 text-center p-8 animate-scale-up max-w-sm w-full">
               <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center text-green-600 shadow-xl shadow-green-200 mb-2">
                 <CheckCircle2 size={48} strokeWidth={2.5} />
               </div>
               <div>
-                <h3 className="text-3xl font-black text-slate-900 mb-2">Message Sent!</h3>
-                <p className="text-slate-500 font-medium text-lg">Successfully sent message to Vicky Bhelave</p>
+                <h3 className={`text-3xl font-black mb-2 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Message Sent!</h3>
+                <p className={`${isDarkMode ? 'text-slate-400' : 'text-slate-500'} font-medium text-lg`}>Successfully sent message to Vicky Bhelave</p>
               </div>
             </div>
           </div>
         )}
 
-        <div className={`flex justify-between items-center shrink-0 z-50 absolute top-0 left-0 w-full px-4 md:px-14 py-4 md:py-6 transition-all ${
-          ['project', 'contact', 'education'].includes(sectionId) ? 'bg-[#f8f9fa]/90 backdrop-blur-md shadow-[0_4px_20px_rgb(0,0,0,0.03)] pointer-events-auto border-b border-slate-200/50' : 'pointer-events-none mt-4 md:mt-8'
-        }`}>
+        <div className={`flex justify-between items-center shrink-0 z-50 absolute top-0 left-0 w-full px-4 md:px-14 py-4 md:py-6 transition-all ${isDarkMode ? 'bg-[#00040a]/90 border-white/10' : 'bg-[#fcfcfc]/90 border-slate-200/50'} backdrop-blur-md shadow-[0_4px_20px_rgb(0,0,0,0.03)] pointer-events-auto border-b`}>
           <button
             onClick={onClose}
-            className={`flex items-center gap-3 border transition-all pointer-events-auto group px-5 py-2.5 rounded-full shadow-lg backdrop-blur-sm ${['contact', 'project', 'education'].includes(sectionId)
-              ? 'bg-black/5 text-slate-800 border-black/10 hover:bg-black/10 hover:border-black/20'
-              : 'text-white bg-white/10 border-white/5 hover:bg-white/20 hover:border-white/20'
-              }`}
+            className={`flex items-center gap-3 border transition-all pointer-events-auto group px-5 py-2.5 rounded-full shadow-lg backdrop-blur-sm ${isDarkMode ? 'bg-white/10 text-white border-white/20 hover:bg-white/20' : 'bg-black/5 text-slate-800 border-black/10 hover:bg-black/10 hover:border-black/20'}`}
           >
             <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
             <span className="font-bold uppercase tracking-[0.2em] text-[10px]">Back</span>
           </button>
 
           {/* Centered Title for Full Page Sections */}
-          {['project', 'contact', 'education'].includes(sectionId) && (
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none w-[70%]">
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#1a1f36] tracking-tight">
-                {sectionId === 'project' ? 'Featured Projects' : sectionId === 'education' ? 'My Education' : <span className="text-slate-900">Contact <span className="text-[#0891b2]">Us</span></span>}
-              </h2>
-              <p className="text-[10px] sm:text-xs md:text-sm text-slate-500 font-medium hidden sm:block mt-0.5 md:mt-1">
-                {sectionId === 'project' ? 'Here are some of my recent web development projects.' : sectionId === 'education' ? 'My academic background and professional growth journey.' : 'Have any questions? I’m happy to help—just drop a message.'}
-              </p>
-            </div>
-          )}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none w-[70%]">
+            <h2 className={`text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight ${isDarkMode ? 'text-white' : 'text-[#1a1f36]'}`}>
+              {sectionId === 'project' ? 'Featured Projects' : sectionId === 'education' ? 'My Education' : sectionId === 'certificate' ? 'My Certificates' : sectionId === 'contact' ? <span>Contact <span className="text-[#0891b2]">Us</span></span> : sectionId === 'about' ? 'About Me' : sectionId === 'skill' ? 'My Skills' : data.title}
+            </h2>
+            <p className={`text-[10px] sm:text-xs md:text-sm font-medium hidden sm:block mt-0.5 md:mt-1 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+              {sectionId === 'project' ? 'Here are some of my recent web development projects.' : sectionId === 'education' ? 'My academic background and professional growth journey.' : sectionId === 'certificate' ? 'Verified recognitions of my technical skills and achievements.' : sectionId === 'contact' ? 'Have any questions? I’m happy to help—just drop a message.' : sectionId === 'about' ? 'Discover my journey, passion, and what drives me.' : sectionId === 'skill' ? 'Technologies and tools I work with.' : data.description}
+            </p>
+          </div>
 
-          <button onClick={onClose} className={`p-3 border rounded-full pointer-events-auto transition-all shadow-lg backdrop-blur-sm ${['contact', 'project', 'education'].includes(sectionId) ? 'bg-black/5 text-slate-800 border-black/10 hover:bg-black/10 hover:border-black/20' : 'text-white bg-white/10 border-white/5 hover:bg-white/20 hover:border-white/20'}`}>
+          <button onClick={onClose} className={`p-3 border rounded-full pointer-events-auto transition-all shadow-lg backdrop-blur-sm ${isDarkMode ? 'bg-white/10 text-white border-white/20 hover:bg-white/20' : 'bg-black/5 text-slate-800 border-black/10 hover:bg-black/10 hover:border-black/20'}`}>
             <X size={24} />
           </button>
         </div>
 
-        <div className={`flex-1 overflow-y-auto custom-scroll relative z-20 ${['project', 'education'].includes(sectionId) ? 'p-0 w-full h-full bg-[#f8f9fa]' : 'pr-2 md:pr-6 p-4 md:p-14 pt-20 md:pt-28'}`}>
+        <div className={`flex-1 overflow-y-auto custom-scroll relative z-20 w-full h-full p-4 md:p-14 pt-24 md:pt-32 ${isDarkMode ? 'bg-[#00040a]' : 'bg-[#fcfcfc]'}`}>
           {sectionId === 'contact' ? (
-            <div className="flex flex-col h-full pt-16 md:pt-20 max-w-7xl mx-auto w-full">
+            <div className="flex flex-col h-full pt-4 md:pt-8 max-w-7xl mx-auto w-full">
 
 
               <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
@@ -296,8 +320,8 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
                       <MapPin size={24} />
                     </div>
                     <div>
-                      <h3 className="text-lg font-bold text-slate-900 mb-1">Address</h3>
-                      <p className="text-slate-500 text-sm leading-relaxed max-w-[250px]">{data.details.address}</p>
+                      <h3 className={`text-lg font-bold mb-1 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Address</h3>
+                      <p className={`text-sm leading-relaxed max-w-[250px] ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>{data.details.address}</p>
                     </div>
                   </div>
 
@@ -307,10 +331,10 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
                       <Phone size={24} />
                     </div>
                     <div>
-                      <h3 className="text-lg font-bold text-slate-900 mb-1">📞 Contact Details</h3>
+                      <h3 className={`text-lg font-bold mb-1 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>📞 Contact Details</h3>
                       <div className="flex flex-col gap-1">
-                        <p className="text-slate-500 text-sm"><span className="font-semibold text-slate-700"> Call / WhatsApp:</span> {data.details.phone.main}</p>
-                        <p className="text-slate-500 text-sm"><span className="font-semibold text-slate-700"> Call / WhatsApp:</span> {data.details.phone.admission}</p>
+                        <p className={`text-sm ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}><span className={`font-semibold ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}> Call / WhatsApp:</span> {data.details.phone.main}</p>
+                        <p className={`text-sm ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}><span className={`font-semibold ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}> Call / WhatsApp:</span> {data.details.phone.admission}</p>
                       </div>
                     </div>
                   </div>
@@ -321,10 +345,10 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
                       <Mail size={24} />
                     </div>
                     <div>
-                      <h3 className="text-lg font-bold text-slate-900 mb-1"> Email Support</h3>
+                      <h3 className={`text-lg font-bold mb-1 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}> Email Support</h3>
                       <div className="flex flex-col gap-1">
-                        <p className="text-slate-500 text-sm"><span className="font-semibold text-slate-700">Personal Email:</span> {data.details.email.general}</p>
-                        <p className="text-slate-500 text-sm"><span className="font-semibold text-slate-700">Support:</span> {data.details.email.support}</p>
+                        <p className={`text-sm ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}><span className={`font-semibold ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>Personal Email:</span> {data.details.email.general}</p>
+                        <p className={`text-sm ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}><span className={`font-semibold ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>Support:</span> {data.details.email.support}</p>
                       </div>
                     </div>
                   </div>
@@ -343,7 +367,7 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
                         href={link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 hover:text-slate-800 cursor-pointer transition-colors"
+                        className={`w-10 h-10 rounded-full flex items-center justify-center cursor-pointer transition-colors ${isDarkMode ? 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-800'}`}
                       >
                         <Icon size={18} />
                       </a>
@@ -353,8 +377,8 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
 
                 {/* Right Column: Form */}
                 <div className="flex-1">
-                  <div className="bg-white rounded-[2rem] p-8 shadow-[0_10px_60px_-10px_rgba(0,0,0,0.05)] border border-slate-100 h-fit relative">
-                    <h3 className="text-2xl font-bold text-slate-900 mb-6">Send us a Message</h3>
+                  <div className={`rounded-[2rem] p-8 h-fit relative transition-colors ${isDarkMode ? 'bg-[#0f172a] border border-slate-800' : 'bg-white shadow-[0_10px_60px_-10px_rgba(0,0,0,0.05)] border border-slate-100'}`}>
+                    <h3 className={`text-2xl font-bold mb-6 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Send us a Message</h3>
 
                     <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
                       <input
@@ -363,7 +387,7 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
                         placeholder="Your Name"
                         value={formData.name}
                         onChange={handleInputChange}
-                        className="w-full bg-slate-50 border border-slate-100 rounded-xl px-6 py-4 outline-none focus:bg-white focus:border-blue-500/30 focus:shadow-[0_0_0_4px_rgba(59,130,246,0.1)] transition-all text-slate-700 placeholder:text-slate-400 font-medium"
+                        className={`w-full rounded-xl px-6 py-4 outline-none border focus:border-blue-500/30 focus:shadow-[0_0_0_4px_rgba(59,130,246,0.1)] transition-all font-medium ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white placeholder:text-slate-600 focus:bg-slate-800' : 'bg-slate-50 border-slate-100 text-slate-700 placeholder:text-slate-400 focus:bg-white'}`}
                       />
 
                       <input
@@ -372,7 +396,7 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
                         placeholder="Email Address"
                         value={formData.email}
                         onChange={handleInputChange}
-                        className="w-full bg-slate-50 border border-slate-100 rounded-xl px-6 py-4 outline-none focus:bg-white focus:border-blue-500/30 focus:shadow-[0_0_0_4px_rgba(59,130,246,0.1)] transition-all text-slate-700 placeholder:text-slate-400 font-medium"
+                        className={`w-full rounded-xl px-6 py-4 outline-none border focus:border-blue-500/30 focus:shadow-[0_0_0_4px_rgba(59,130,246,0.1)] transition-all font-medium ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white placeholder:text-slate-600 focus:bg-slate-800' : 'bg-slate-50 border-slate-100 text-slate-700 placeholder:text-slate-400 focus:bg-white'}`}
                       />
 
                       <input
@@ -381,7 +405,7 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
                         placeholder="Mobile No."
                         value={formData.mobile}
                         onChange={handleInputChange}
-                        className="w-full bg-slate-50 border border-slate-100 rounded-xl px-6 py-4 outline-none focus:bg-white focus:border-blue-500/30 focus:shadow-[0_0_0_4px_rgba(59,130,246,0.1)] transition-all text-slate-700 placeholder:text-slate-400 font-medium"
+                        className={`w-full rounded-xl px-6 py-4 outline-none border focus:border-blue-500/30 focus:shadow-[0_0_0_4px_rgba(59,130,246,0.1)] transition-all font-medium ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white placeholder:text-slate-600 focus:bg-slate-800' : 'bg-slate-50 border-slate-100 text-slate-700 placeholder:text-slate-400 focus:bg-white'}`}
                       />
 
                       <textarea
@@ -390,7 +414,7 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
                         placeholder="Message..."
                         value={formData.message}
                         onChange={handleInputChange}
-                        className="w-full bg-slate-50 border border-slate-100 rounded-xl px-6 py-4 outline-none focus:bg-white focus:border-blue-500/30 focus:shadow-[0_0_0_4px_rgba(59,130,246,0.1)] transition-all resize-none text-slate-700 placeholder:text-slate-400 font-medium"
+                        className={`w-full rounded-xl px-6 py-4 outline-none border focus:border-blue-500/30 focus:shadow-[0_0_0_4px_rgba(59,130,246,0.1)] transition-all resize-none font-medium ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white placeholder:text-slate-600 focus:bg-slate-800' : 'bg-slate-50 border-slate-100 text-slate-700 placeholder:text-slate-400 focus:bg-white'}`}
                       ></textarea>
 
                       <button
@@ -411,14 +435,14 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
                 </div>
               </div>
             </div>
-          ) : sectionId === 'project' ? (
+          ) : sectionId === 'project' || sectionId === 'certificate' ? (
             <div className="flex flex-col min-h-screen w-full items-center pt-28 md:pt-36 px-6">
               <div className="w-full flex-1 px-4 lg:px-12 2xl:px-24 mt-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8 w-full mx-auto pb-32">
                   {data.points.map((item, i) => (
-                    <div key={i} className="group flex flex-col bg-white rounded-2xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)] transition-all duration-500 border border-slate-100 hover:-translate-y-2 h-full">
-                      {/* Project Image */}
-                      <div className="w-full h-48 sm:h-56 xl:h-64 bg-slate-100 relative overflow-hidden border-b border-slate-100 p-3 pt-6">
+                    <div key={i} className={`group flex flex-col rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 h-full border ${isDarkMode ? 'bg-[#0f172a] border-slate-800 shadow-[0_8px_30px_rgb(0,0,0,0.5)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.8)]' : 'bg-white border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)]'}`}>
+                      {/* Project/Certificate Image */}
+                      <div className={`w-full h-48 sm:h-56 xl:h-64 relative overflow-hidden border-b p-3 pt-6 ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-100'}`}>
                         {item.image ? (
                           <div className="w-full h-full rounded-t-xl overflow-hidden shadow-md">
                             <img 
@@ -428,58 +452,80 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
                             />
                           </div>
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center text-slate-300 bg-slate-50 rounded-t-xl">
-                            <Layers size={64} strokeWidth={1} />
+                          <div className={`w-full h-full flex items-center justify-center rounded-t-xl ${isDarkMode ? 'bg-slate-800 text-slate-600' : 'bg-slate-50 text-slate-300'}`}>
+                            {sectionId === 'certificate' ? <Award size={64} strokeWidth={1} /> : <Layers size={64} strokeWidth={1} />}
                           </div>
                         )}
                       </div>
                       
-                      {/* Project Content */}
-                      <div className="flex flex-col flex-1 p-6 md:p-8 bg-white z-10 relative">
-                        <h3 className="text-xl xl:text-2xl font-bold text-[#1a1f36] mb-3 line-clamp-1">
+                      {/* Content */}
+                      <div className={`flex flex-col flex-1 p-6 md:p-8 z-10 relative ${isDarkMode ? 'bg-[#0f172a]' : 'bg-white'}`}>
+                        <h3 className={`text-xl xl:text-2xl font-bold mb-3 line-clamp-1 ${isDarkMode ? 'text-white' : 'text-[#1a1f36]'}`}>
                           {item.title}
                         </h3>
                         
-                        <p className="text-slate-500 text-sm xl:text-base leading-relaxed mb-6 flex-1 line-clamp-3">
+                        <p className={`text-sm xl:text-base leading-relaxed mb-6 flex-1 line-clamp-3 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
                           {item.text}
                         </p>
 
                         {/* Action Buttons */}
                         <div className="flex gap-4 sm:gap-6 mt-auto">
-                          {item.githubLink ? (
-                             <a 
-                              href={item.githubLink}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex-1 text-center py-3.5 px-6 rounded-xl bg-white border-2 border-slate-200 text-[#3b5998] font-bold text-base xl:text-lg hover:border-[#3b5998] hover:bg-blue-50/50 transition-all active:scale-95"
-                            >
-                              View Code
-                            </a>
-                          ) : (
-                             <button 
-                              disabled
-                              className="flex-1 text-center py-3.5 px-6 rounded-xl bg-slate-50 border-2 border-slate-200 text-slate-400 font-bold text-base xl:text-lg cursor-not-allowed opacity-70"
-                            >
-                              View Code
-                            </button>
-                          )}
+                          {sectionId === 'project' ? (
+                            <>
+                              {item.githubLink ? (
+                                <a 
+                                  href={item.githubLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className={`flex-1 text-center py-3.5 px-6 rounded-xl border-2 font-bold text-base xl:text-lg transition-all active:scale-95 ${isDarkMode ? 'bg-slate-800 border-slate-700 text-blue-400 hover:bg-slate-700 hover:text-blue-300' : 'bg-white border-slate-200 text-[#3b5998] hover:border-[#3b5998] hover:bg-blue-50/50'}`}
+                                >
+                                  View Code
+                                </a>
+                              ) : (
+                                <button 
+                                  disabled
+                                  className={`flex-1 text-center py-3.5 px-6 rounded-xl border-2 font-bold text-base xl:text-lg cursor-not-allowed opacity-70 ${isDarkMode ? 'bg-slate-800/50 border-slate-800 text-slate-500' : 'bg-slate-50 border-slate-200 text-slate-400'}`}
+                                >
+                                  View Code
+                                </button>
+                              )}
 
-                          {item.link ? (
-                            <a 
-                              href={item.link} 
-                              target="_blank" 
-                              rel="noopener noreferrer" 
-                              className="flex-1 text-center py-3.5 px-6 rounded-xl bg-[#3b5998] hover:bg-[#2d4373] text-white font-bold text-base xl:text-lg transition-all shadow-lg hover:shadow-xl hover:shadow-[#3b5998]/20 active:scale-95"
-                            >
-                              Live Demo
-                            </a>
+                              {item.link ? (
+                                <a 
+                                  href={item.link} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer" 
+                                  className="flex-1 text-center py-3.5 px-6 rounded-xl bg-[#3b5998] hover:bg-[#2d4373] text-white font-bold text-base xl:text-lg transition-all shadow-lg hover:shadow-xl hover:shadow-[#3b5998]/20 active:scale-95"
+                                >
+                                  Live Demo
+                                </a>
+                              ) : (
+                                <button 
+                                  disabled
+                                  className={`flex-1 text-center py-3.5 px-6 rounded-xl text-white font-bold text-base xl:text-lg cursor-not-allowed ${isDarkMode ? 'bg-slate-800 text-slate-500' : 'bg-slate-300'}`}
+                                >
+                                  Live Demo
+                                </button>
+                              )}
+                            </>
                           ) : (
-                            <button 
-                              disabled
-                              className="flex-1 text-center py-3.5 px-6 rounded-xl bg-slate-300 text-white font-bold text-base xl:text-lg cursor-not-allowed"
-                            >
-                              Live Demo
-                            </button>
+                            item.link ? (
+                              <a 
+                                href={item.link} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className={`w-full text-center py-3.5 px-6 rounded-xl font-bold text-base xl:text-lg transition-all shadow-lg hover:shadow-xl active:scale-95 ${isDarkMode ? 'bg-[#0891b2] hover:bg-[#06b6d4] text-white hover:shadow-cyan-500/20' : 'bg-[#0891b2] hover:bg-[#0e7490] text-white hover:shadow-cyan-500/20'}`}
+                              >
+                                View Certificate
+                              </a>
+                            ) : (
+                              <button 
+                                disabled
+                                className={`w-full text-center py-3.5 px-6 rounded-xl font-bold text-base xl:text-lg cursor-not-allowed ${isDarkMode ? 'bg-slate-800 text-slate-500' : 'bg-slate-300 text-white'}`}
+                              >
+                                View Certificate
+                              </button>
+                            )
                           )}
                         </div>
                       </div>
@@ -490,7 +536,7 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
             </div>
           ) : (
             <div className="flex flex-col gap-12">
-              {sectionId !== 'education' && (
+              {sectionId !== 'education' && sectionId !== 'about' && (
                 <div className="flex flex-col md:flex-row gap-8 items-start">
                   <div className={`w-20 h-20 md:w-24 md:h-24 rounded-3xl bg-gradient-to-br ${data.color} flex items-center justify-center shadow-[0_0_30px_rgba(59,130,246,0.3)] shrink-0`}>
                     <Icon size={44} className={isDarkMode ? 'text-white' : 'text-white'} />
@@ -507,13 +553,23 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
               )}
               
               {sectionId === 'about' ? (
-                <div className="mt-8 pb-12 w-full flex justify-center">
-                  <div className="flex flex-wrap justify-center gap-6 mt-6">
+                <div className="flex flex-col items-center justify-center min-h-[60vh] w-full max-w-5xl mx-auto text-center px-4 md:px-12">
+                  <div className={`w-28 h-28 md:w-36 md:h-36 rounded-full mb-8 flex items-center justify-center shadow-2xl bg-gradient-to-br ${data.color} ring-4 ring-offset-4 ${isDarkMode ? 'ring-blue-500/30 ring-offset-[#0f172a]' : 'ring-blue-500/20 ring-offset-white'}`}>
+                    <Icon size={64} className="text-white" />
+                  </div>
+                  <h2 className={`text-4xl md:text-6xl font-black uppercase tracking-tight mb-8 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                    {data.title}
+                  </h2>
+                  <p className={`text-lg md:text-2xl leading-relaxed font-medium max-w-4xl mx-auto mb-16 ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+                    <TypewriterText text={data.description} delay={300} speed={15} />
+                  </p>
+                  
+                  <div className="flex flex-wrap justify-center gap-6 w-full">
                     <a
                       href={resumeViewLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-4 px-12 py-5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:scale-[1.02] transition-all shadow-xl shadow-blue-600/40 font-bold active:scale-95 text-white text-xl"
+                      className="flex items-center gap-4 px-10 py-4 md:px-12 md:py-5 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:scale-[1.02] transition-all shadow-xl shadow-blue-600/40 font-bold active:scale-95 text-white text-lg md:text-xl"
                     >
                       <Eye size={24} />
                       <span>Explore Resume</span>
@@ -523,7 +579,7 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
                       href={resumeDownloadLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-4 px-12 py-5 rounded-full border-2 border-blue-500/50 hover:bg-blue-500/10 transition-all font-bold active:scale-95 text-blue-400 text-xl"
+                      className={`flex items-center gap-4 px-10 py-4 md:px-12 md:py-5 rounded-full border-2 transition-all font-bold active:scale-95 text-lg md:text-xl ${isDarkMode ? 'border-blue-500/50 hover:bg-blue-500/10 text-blue-400' : 'border-blue-600 text-blue-600 hover:bg-blue-50'}`}
                     >
                       <Download size={24} />
                       <span>Download CV</span>
@@ -596,17 +652,26 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
                                 {isLeft ? (
                                   <>
                                     {/* Left Content */}
-                                    <div className="w-[45%] flex flex-col items-end relative pt-4">
-                                      <span className="absolute -right-16 -top-6 text-[#5b6b7c] font-semibold text-sm">{item.date}</span>
-                                      
+                                    <div className={`w-[45%] flex flex-col items-end relative pt-4 opacity-0 animate-[slideInLeft_0.8s_ease-out_forwards]`} style={{ animationDelay: `${i * 0.3}s` }}>
                                       {/* Horizontal Connector Line Right */}
                                       <div className="absolute -right-[6.5%] top-14 w-[12%] h-[3px] bg-[#fb923c] z-0" />
 
-                                      <div className="w-full bg-[#f6f7f8] border-[2px] border-[#fb923c] rounded-[2rem] p-10 shadow-[0_0_40px_-5px_rgba(251,146,60,0.3)] text-right relative z-10 hover:-translate-y-1 transition-transform">
-                                        <h3 className="text-2xl md:text-3xl font-black text-[#2d3748] italic mb-6 tracking-tight">{item.title}</h3>
-                                        <p className="text-[#4e5d78] text-[17px] leading-[1.8] font-medium max-w-[85%] ml-auto">
-                                          {item.subtitle}
-                                        </p>
+                                      <div className="w-full relative rounded-[2rem] p-[4px] overflow-hidden hover:-translate-y-2 hover:scale-105 hover:shadow-[0_0_50px_-5px_rgba(251,146,60,0.6)] shadow-[0_0_40px_-5px_rgba(251,146,60,0.3)] transition-all duration-300 cursor-pointer z-10 group">
+                                        {/* Normal rotating single-color line */}
+                                        <div className="absolute top-1/2 left-1/2 w-[250%] h-[250%] -translate-x-1/2 -translate-y-1/2 bg-[conic-gradient(from_0deg,transparent_70%,#fb923c_100%)] animate-[spin_3s_linear_infinite] z-0 group-hover:opacity-0 transition-opacity duration-500" />
+                                        
+                                        {/* Colorful rotating gradient border on hover */}
+                                        <div className="absolute top-1/2 left-1/2 w-[250%] h-[250%] -translate-x-1/2 -translate-y-1/2 bg-[conic-gradient(from_0deg,#fb923c,#ec4899,#8b5cf6,#3b82f6,#10b981,#eab308,#fb923c)] animate-[spin_3s_linear_infinite] z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                        
+                                        <div className={`relative z-10 w-full h-full rounded-[calc(2rem-4px)] p-8 md:p-10 text-center flex flex-col items-center justify-center ${isDarkMode ? 'bg-[#0f172a]' : 'bg-[#f6f7f8]'}`}>
+                                          <h3 className={`text-xl sm:text-2xl md:text-[22px] lg:text-[24px] xl:text-[26px] font-black italic mb-4 tracking-tight whitespace-nowrap overflow-hidden text-ellipsis w-full text-center ${isDarkMode ? 'text-white' : 'text-[#2d3748]'}`}>
+                                            <TypewriterText text={item.title} delay={(i * 300) + 600} speed={40} />
+                                          </h3>
+                                          <p className={`text-[15px] lg:text-[17px] leading-[1.8] font-medium mb-3 ${isDarkMode ? 'text-slate-400' : 'text-[#4e5d78]'}`}>
+                                            <TypewriterText text={item.subtitle} delay={(i * 300) + 1200} speed={20} />
+                                          </p>
+                                          <p className="text-[#fb923c] font-bold text-sm tracking-widest">{item.date}</p>
+                                        </div>
                                       </div>
                                     </div>
                                     <div className="w-[10%] flex justify-center relative">
@@ -623,17 +688,26 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
                                         <div className="w-[20px] h-[20px] bg-[#fb923c] rounded-full shadow-[0_0_15px_4px_rgba(251,146,60,0.5)] z-20 absolute top-[3.2rem]" />
                                     </div>
                                     {/* Right Content */}
-                                    <div className="w-[45%] flex flex-col items-start relative pt-4">
-                                      <span className="absolute -left-16 -top-6 text-[#5b6b7c] font-semibold text-sm">{item.date}</span>
-                                      
+                                    <div className={`w-[45%] flex flex-col items-start relative pt-4 opacity-0 animate-[slideInRight_0.8s_ease-out_forwards]`} style={{ animationDelay: `${i * 0.3}s` }}>
                                       {/* Horizontal Connector Line Left */}
                                       <div className="absolute -left-[6.5%] top-14 w-[12%] h-[3px] bg-[#fb923c] z-0" />
 
-                                      <div className="w-full bg-[#f6f7f8] border-[2px] border-[#fb923c] rounded-[2rem] p-10 shadow-[0_0_40px_-5px_rgba(251,146,60,0.3)] text-left relative z-10 hover:-translate-y-1 transition-transform">
-                                        <h3 className="text-2xl md:text-3xl font-black text-[#2d3748] italic mb-6 tracking-tight">{item.title}</h3>
-                                        <p className="text-[#4e5d78] text-[17px] leading-[1.8] font-medium max-w-[85%]">
-                                          {item.subtitle}
-                                        </p>
+                                      <div className="w-full relative rounded-[2rem] p-[4px] overflow-hidden hover:-translate-y-2 hover:scale-105 hover:shadow-[0_0_50px_-5px_rgba(251,146,60,0.6)] shadow-[0_0_40px_-5px_rgba(251,146,60,0.3)] transition-all duration-300 cursor-pointer z-10 group">
+                                        {/* Normal rotating single-color line */}
+                                        <div className="absolute top-1/2 left-1/2 w-[250%] h-[250%] -translate-x-1/2 -translate-y-1/2 bg-[conic-gradient(from_0deg,transparent_70%,#fb923c_100%)] animate-[spin_3s_linear_infinite] z-0 group-hover:opacity-0 transition-opacity duration-500" />
+                                        
+                                        {/* Colorful rotating gradient border on hover */}
+                                        <div className="absolute top-1/2 left-1/2 w-[250%] h-[250%] -translate-x-1/2 -translate-y-1/2 bg-[conic-gradient(from_0deg,#fb923c,#ec4899,#8b5cf6,#3b82f6,#10b981,#eab308,#fb923c)] animate-[spin_3s_linear_infinite] z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                        
+                                        <div className={`relative z-10 w-full h-full rounded-[calc(2rem-4px)] p-8 md:p-10 text-center flex flex-col items-center justify-center ${isDarkMode ? 'bg-[#0f172a]' : 'bg-[#f6f7f8]'}`}>
+                                          <h3 className={`text-xl sm:text-2xl md:text-[22px] lg:text-[24px] xl:text-[26px] font-black italic mb-4 tracking-tight whitespace-nowrap overflow-hidden text-ellipsis w-full text-center ${isDarkMode ? 'text-white' : 'text-[#2d3748]'}`}>
+                                            <TypewriterText text={item.title} delay={(i * 300) + 600} speed={40} />
+                                          </h3>
+                                          <p className={`text-[15px] lg:text-[17px] leading-[1.8] font-medium mb-3 ${isDarkMode ? 'text-slate-400' : 'text-[#4e5d78]'}`}>
+                                            <TypewriterText text={item.subtitle} delay={(i * 300) + 1200} speed={20} />
+                                          </p>
+                                          <p className="text-[#fb923c] font-bold text-sm tracking-widest">{item.date}</p>
+                                        </div>
                                       </div>
                                     </div>
                                   </>
@@ -641,18 +715,28 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
                               </div>
 
                               {/* Mobile Layout */}
-                              <div className="md:hidden flex w-full items-start pl-12 relative pt-2">
-                                <span className="absolute left-[3.2rem] -top-5 text-[#5b6b7c] font-semibold text-xs">{item.date}</span>
+                              <div className={`md:hidden flex w-full items-start pl-12 relative pt-2 opacity-0 animate-[slideInRight_0.8s_ease-out_forwards]`} style={{ animationDelay: `${i * 0.3}s` }}>
                                 <div className="absolute left-[18px] top-12 w-[15px] h-[15px] bg-[#fb923c] rounded-full shadow-[0_0_15px_4px_rgba(251,146,60,0.5)] z-20" />
                                 
                                 {/* Mobile Horizontal Connector */}
                                 <div className="absolute left-[28px] top-[54px] w-[1rem] h-[3px] bg-[#fb923c] z-10" />
 
-                                <div className="w-full bg-[#f6f7f8] border-[2px] border-[#fb923c] rounded-[1.5rem] p-6 shadow-[0_0_30px_-5px_rgba(251,146,60,0.2)] mt-0 relative z-10">
-                                  <h3 className="text-xl font-black text-[#2d3748] italic mb-4">{item.title}</h3>
-                                  <p className="text-[#4e5d78] text-[15px] leading-relaxed font-medium">
-                                    {item.subtitle}
-                                  </p>
+                                <div className="w-full relative rounded-[1.5rem] p-[3px] overflow-hidden mt-0 hover:-translate-y-2 hover:scale-105 hover:shadow-[0_0_40px_-5px_rgba(251,146,60,0.5)] shadow-[0_0_30px_-5px_rgba(251,146,60,0.2)] transition-all duration-300 cursor-pointer z-10 group">
+                                  {/* Normal rotating single-color line */}
+                                  <div className="absolute top-1/2 left-1/2 w-[250%] h-[250%] -translate-x-1/2 -translate-y-1/2 bg-[conic-gradient(from_0deg,transparent_70%,#fb923c_100%)] animate-[spin_3s_linear_infinite] z-0 group-hover:opacity-0 transition-opacity duration-500" />
+                                  
+                                  {/* Colorful rotating gradient border on hover */}
+                                  <div className="absolute top-1/2 left-1/2 w-[250%] h-[250%] -translate-x-1/2 -translate-y-1/2 bg-[conic-gradient(from_0deg,#fb923c,#ec4899,#8b5cf6,#3b82f6,#10b981,#eab308,#fb923c)] animate-[spin_3s_linear_infinite] z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                                  <div className={`relative z-10 w-full h-full rounded-[calc(1.5rem-3px)] p-5 sm:p-6 text-center flex flex-col items-center justify-center ${isDarkMode ? 'bg-[#0f172a]' : 'bg-[#f6f7f8]'}`}>
+                                    <h3 className={`text-lg sm:text-xl font-black italic mb-3 whitespace-normal sm:whitespace-nowrap overflow-hidden text-ellipsis w-full ${isDarkMode ? 'text-white' : 'text-[#2d3748]'}`}>
+                                      <TypewriterText text={item.title} delay={(i * 300) + 600} speed={40} />
+                                    </h3>
+                                    <p className={`text-[14px] sm:text-[15px] leading-relaxed font-medium mb-2 ${isDarkMode ? 'text-slate-400' : 'text-[#4e5d78]'}`}>
+                                      <TypewriterText text={item.subtitle} delay={(i * 300) + 1200} speed={20} />
+                                    </p>
+                                    <p className="text-[#fb923c] font-bold text-xs tracking-widest">{item.date}</p>
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -663,25 +747,108 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
                   </div>
                 </div>
               ) : sectionId === 'skill' ? (
-                <div className="flex flex-col gap-16 mt-10 pb-16 w-full">
-                  {data.skillGroups.map((group, i) => (
-                    <div key={i} className="flex flex-col items-center w-full relative">
-                      <div className="absolute -top-8 left-1/2 -translate-x-1/2 px-8 py-2 rounded-full bg-indigo-950/50 border border-indigo-500/20 backdrop-blur-sm z-20">
-                        <h3 className="text-indigo-400 text-sm md:text-base font-black tracking-widest uppercase text-center">{group.category}</h3>
-                      </div>
-
-                      <div className="flex flex-wrap justify-center gap-6 w-full max-w-4xl p-10 rounded-[3rem] bg-gradient-to-b from-white/5 to-transparent border border-white/5 relative">
-                        {group.items.map((skill, idx) => (
-                          <div key={idx} className="relative group cursor-default overflow-hidden rounded-2xl">
-                            <div className="relative z-10 bg-slate-900 border-2 border-slate-700/50 shadow-lg px-12 py-5 text-slate-300 font-black text-xl md:text-2xl transition-all duration-500 tracking-tight text-center flex items-center justify-center min-w-[180px] group-hover:text-white group-hover:border-green-400 group-hover:shadow-green-500/20">
-                              <span className="relative z-20">{skill}</span>
-                              <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-emerald-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-10" />
-                            </div>
-                          </div>
-                        ))}
+                <div className="flex flex-col items-center justify-center min-h-[70vh] w-full overflow-hidden relative">
+                  
+                  {/* Orbit Animation Styles */}
+                  <style>{`
+                    @keyframes orbit {
+                      from { transform: rotate(0deg); }
+                      to { transform: rotate(360deg); }
+                    }
+                    @keyframes orbit-reverse {
+                      from { transform: rotate(360deg); }
+                      to { transform: rotate(0deg); }
+                    }
+                    .orbit-radius-1 { transform: translateY(-90px); }
+                    .orbit-radius-2 { transform: translateY(-135px); }
+                    @media (min-width: 768px) {
+                        .orbit-radius-1 { transform: translateY(-160px); }
+                        .orbit-radius-2 { transform: translateY(-240px); }
+                    }
+                  `}</style>
+                  
+                  {/* Rotating System Container */}
+                  <div className="relative w-[300px] h-[300px] md:w-[600px] md:h-[600px] flex items-center justify-center mt-20 md:mt-0">
+                    
+                    {/* Center Core */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+                      <div className="relative w-24 h-24 md:w-32 md:h-32 bg-white/5 backdrop-blur-md rounded-full flex items-center justify-center border border-white/10 shadow-[0_0_80px_rgba(79,70,229,0.3)] animate-[pulse_4s_ease-in-out_infinite]">
+                         <div className="absolute inset-0 rounded-full border border-indigo-500/20 animate-[ping_3s_linear_infinite]" />
+                         <div className="absolute inset-0 rounded-full border border-indigo-400/10 animate-[spin_10s_linear_infinite]" />
+                         <Cpu size={40} className="text-indigo-400 drop-shadow-[0_0_15px_rgba(99,102,241,0.8)] relative z-10 md:w-[50px] md:h-[50px]" />
+                         <div className="absolute -bottom-12 text-center w-40">
+                            <h3 className={`text-base font-black tracking-[0.3em] ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>SKILLS</h3>
+                         </div>
                       </div>
                     </div>
-                  ))}
+
+                    {/* Orbit 1: Frontend (Inner) */}
+                    <div className="absolute inset-0 animate-[orbit_30s_linear_infinite] z-10 pointer-events-none">
+                        <div className="w-full h-full rounded-full border border-dashed border-indigo-500/10 absolute inset-0 scale-[0.6] md:scale-[0.53]" />
+                        {[
+                          { name: 'HTML', icon: FileCode, color: 'text-orange-500', glow: 'shadow-orange-500/50' },
+                          { name: 'CSS', icon: Palette, color: 'text-blue-500', glow: 'shadow-blue-500/50' },
+                          { name: 'JavaScript', icon: Code2, color: 'text-yellow-400', glow: 'shadow-yellow-400/50' },
+                        ].map((item, index, arr) => (
+                           <div key={index} className="absolute top-1/2 left-1/2 w-0 h-0 pointer-events-auto" 
+                                style={{ transform: `rotate(${index * (360/arr.length)}deg)` }}> 
+                                {/* 1. Rotate to angle */}
+                                <div className="orbit-radius-1 absolute top-0 left-0 flex items-center justify-center">
+                                   {/* 2. Translate out to radius - handled by class */}
+                                   <div style={{ transform: `rotate(-${index * (360/arr.length)}deg)` }}>
+                                      {/* 3. Counter-rotate placement */}
+                                      <div className="animate-[orbit-reverse_30s_linear_infinite]">
+                                          {/* 4. Counter-animate orbit */}
+                                          <div className={`flex flex-col items-center gap-2 group cursor-pointer transition-all hover:scale-125`}>
+                                              <div className={`w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-[#0f172a] border border-white/10 flex items-center justify-center shadow-lg ${item.glow} group-hover:border-white/30 transition-colors`}>
+                                                  <item.icon size={24} className={`${item.color} md:w-8 md:h-8`} />
+                                              </div>
+                                              <span className={`text-[10px] font-bold bg-black/40 px-2 py-0.5 rounded backdrop-blur-md text-white border border-white/5 opacity-0 group-hover:opacity-100 transition-opacity absolute -bottom-6 whitespace-nowrap`}>{item.name}</span>
+                                          </div>
+                                      </div>
+                                   </div>
+                                </div>
+                           </div>
+                        ))}
+                    </div>
+
+                    {/* Orbit 2: Tools (Outer) */}
+                    <div className="absolute inset-0 animate-[orbit_50s_linear_infinite] pointer-events-none">
+                        <div className="w-full h-full rounded-full border border-dashed border-indigo-500/5 absolute inset-0 scale-[0.9] md:scale-[0.8]" />
+                        {[
+                          { name: 'Vercel', icon: UploadCloud, color: 'text-white', glow: 'shadow-white/50' },
+                          { name: 'GitHub', icon: Github, color: 'text-gray-400', glow: 'shadow-gray-400/50' },
+                          { name: 'VS Code', icon: Terminal, color: 'text-blue-400', glow: 'shadow-blue-400/50' },
+                          { name: 'Excel', icon: Table, color: 'text-green-500', glow: 'shadow-green-500/50' },
+                          { name: 'Canva', icon: ImageIcon, color: 'text-purple-400', glow: 'shadow-purple-400/50' },
+                          { name: 'Google Sheet', icon: Grid, color: 'text-green-400', glow: 'shadow-green-400/50' },
+                        ].map((item, index, arr) => (
+                           <div key={index} className="absolute top-1/2 left-1/2 w-0 h-0 pointer-events-auto"
+                                style={{ transform: `rotate(${index * (360/arr.length)}deg)` }}>
+                                <div className="orbit-radius-2 absolute top-0 left-0 flex items-center justify-center">
+                                   <div style={{ transform: `rotate(-${index * (360/arr.length)}deg)` }}>
+                                      <div className="animate-[orbit-reverse_50s_linear_infinite]">
+                                          <div className={`flex flex-col items-center gap-2 group cursor-pointer transition-all hover:scale-125`}>
+                                              <div className={`w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-[#0f172a] border border-white/10 flex items-center justify-center shadow-lg ${item.glow} group-hover:border-white/30 transition-colors`}>
+                                                  <item.icon size={24} className={`${item.color} md:w-8 md:h-8`} />
+                                              </div>
+                                              <span className={`text-[10px] font-bold bg-black/40 px-2 py-0.5 rounded backdrop-blur-md text-white border border-white/5 opacity-0 group-hover:opacity-100 transition-opacity absolute -bottom-6 whitespace-nowrap`}>{item.name}</span>
+                                          </div>
+                                      </div>
+                                   </div>
+                                </div>
+                           </div>
+                        ))}
+                    </div>
+
+                    {/* Floating Decorative Elements */}
+                     <div className="absolute inset-0 animate-spin-slow pointer-events-none opacity-20">
+                        <div className="absolute top-10 left-10 w-2 h-2 bg-blue-400 rounded-full blur-[1px]" />
+                        <div className="absolute bottom-20 right-20 w-3 h-3 bg-purple-400 rounded-full blur-[2px]" />
+                        <div className="absolute top-1/2 right-10 w-1 h-1 bg-white rounded-full" />
+                     </div>
+
+                  </div>
                 </div>
               ) : sectionId === 'project' ? (
                 <div className="w-full">
