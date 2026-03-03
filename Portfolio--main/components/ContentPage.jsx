@@ -249,8 +249,52 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
   const data = getSectionData(sectionId);
   const Icon = data.icon;
 
+  // Ripple effect for buttons
+  const createRipple = (e) => {
+    const btn = e.currentTarget;
+    const rect = btn.getBoundingClientRect();
+    const diameter = Math.max(rect.width, rect.height);
+    const radius = diameter / 2;
+
+    const circle = document.createElement('span');
+    circle.className = 'ripple';
+    circle.style.width = circle.style.height = `${diameter}px`;
+    circle.style.left = `${e.clientX - rect.left - radius}px`;
+    circle.style.top = `${e.clientY - rect.top - radius}px`;
+    const existing = btn.getElementsByClassName('ripple')[0];
+    if (existing) existing.remove();
+    btn.appendChild(circle);
+    setTimeout(() => circle.remove(), 650);
+  };
+
   const resumeViewLink = "https://drive.google.com/file/d/1gnwkXURTR_Qq6XlVxpKRj37ot5_7HRZl/view?usp=sharing";
   const resumeDownloadLink = "https://drive.google.com/uc?export=download&id=1gnwkXURTR_Qq6XlVxpKRj37ot5_7HRZl";
+
+  // Filter state for skill buttons
+  const [activeFilter, setActiveFilter] = useState('technical');
+
+  const skillSets = {
+    technical: [
+      { name: 'HTML', icon: FileCode, desc: 'Markup Language', color: 'text-orange-500', bg: 'bg-orange-500', border: 'border-orange-500/50', shadow: 'shadow-orange-500/30' },
+      { name: 'CSS', icon: Palette, desc: 'Styling Rules', color: 'text-blue-500', bg: 'bg-blue-500', border: 'border-blue-500/50', shadow: 'shadow-blue-500/30' },
+      { name: 'TailwindCSS', icon: Monitor, desc: 'Utility Framework', color: 'text-sky-400', bg: 'bg-sky-400', border: 'border-sky-400/50', shadow: 'shadow-sky-400/30' },
+      { name: 'JavaScript', icon: Code2, desc: 'Programming Logic', color: 'text-yellow-400', bg: 'bg-yellow-400', border: 'border-yellow-400/50', shadow: 'shadow-yellow-400/30' },
+      { name: 'Python', icon: Cpu, desc: 'Language', color: 'text-green-400', bg: 'bg-green-400', border: 'border-green-400/50', shadow: 'shadow-green-400/30' },
+      { name: 'Firebase', icon: UploadCloud, desc: 'Backend Services', color: 'text-cyan-400', bg: 'bg-cyan-400', border: 'border-cyan-400/50', shadow: 'shadow-cyan-400/30' },
+    ],
+    tools: [
+      { name: 'Vercel', icon: UploadCloud, desc: 'Deployment', color: 'text-white', bg: 'bg-white', border: 'border-white/50', shadow: 'shadow-white/30' },
+      { name: '.git', icon: FileCode, desc: 'Git', color: 'text-gray-400', bg: 'bg-gray-400', border: 'border-gray-400/50', shadow: 'shadow-gray-400/30' },
+      { name: 'GitHub', icon: Github, desc: 'Repository', color: 'text-gray-400', bg: 'bg-gray-400', border: 'border-gray-400/50', shadow: 'shadow-gray-400/30' },
+      { name: 'VS Code', icon: Terminal, desc: 'Editor', color: 'text-blue-400', bg: 'bg-blue-400', border: 'border-blue-400/50', shadow: 'shadow-blue-400/30' },
+      { name: 'antigravitywindsarf', icon: ExternalLink, desc: 'Fun Tool', color: 'text-pink-400', bg: 'bg-pink-400', border: 'border-pink-400/50', shadow: 'shadow-pink-400/30' },
+    ],
+    design: [
+      { name: 'Excel', icon: Table, desc: 'Data Analysis', color: 'text-green-500', bg: 'bg-green-500', border: 'border-green-500/50', shadow: 'shadow-green-500/30' },
+      { name: 'Canva', icon: ImageIcon, desc: 'Graphic Design', color: 'text-purple-400', bg: 'bg-purple-400', border: 'border-purple-400/50', shadow: 'shadow-purple-400/30' },
+      { name: 'Google Sheet', icon: Grid, desc: 'Data Management', color: 'text-green-400', bg: 'bg-green-400', border: 'border-green-400/50', shadow: 'shadow-green-400/30' },
+    ]
+  };
 
   return (
     <div className={`fixed inset-0 z-[100] flex items-center justify-center p-0`}>
@@ -259,7 +303,7 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
         onClick={onClose}
       />
 
-      <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vmin] h-[40vmin] md:w-[600px] md:h-[600px] rounded-full blur-[100px] md:blur-[140px] opacity-12 md:opacity-20 ${data.glow}`} />
+      <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40vmin] h-[40vmin] md:w-[600px] md:h-[600px] rounded-full blur-[100px] md:blur-[140px] opacity-12 md:opacity-20 ${data.glow} ${sectionId === 'skill' ? 'opacity-0 pointer-events-none' : ''}`} />
 
       <div className={`modal-responsive relative overflow-hidden flex flex-col animate-page-flip shadow-2xl w-full h-full rounded-none p-0 ${isDarkMode ? 'bg-[#00040a] text-white' : 'bg-[#fcfcfc] text-slate-900'} border-0`}>
         <div className={`absolute inset-0 hidden`}>
@@ -306,7 +350,7 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
           </button>
         </div>
 
-        <div className={`flex-1 overflow-y-auto custom-scroll relative z-20 w-full h-full p-4 md:p-14 pt-24 md:pt-32 ${isDarkMode ? 'bg-[#00040a]' : 'bg-[#fcfcfc]'}`}>
+        <div className={`flex-1 overflow-y-auto custom-scroll relative z-20 w-full h-full p-4 md:p-14 pt-24 md:pt-32 ${isDarkMode ? 'bg-[#00040a]' : 'bg-[#fcfcfc]'} ${sectionId === 'skill' ? 'skill-mode' : ''}`}>
           {sectionId === 'contact' ? (
             <div className="flex flex-col h-full pt-4 md:pt-8 max-w-7xl mx-auto w-full">
 
@@ -436,8 +480,8 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
               </div>
             </div>
           ) : sectionId === 'project' || sectionId === 'certificate' ? (
-            <div className="flex flex-col min-h-screen w-full items-center pt-28 md:pt-36 px-6">
-              <div className="w-full flex-1 px-4 lg:px-12 2xl:px-24 mt-6">
+            <div className="flex flex-col min-h-screen w-full items-center pt-8 md:pt-10 px-6">
+              <div className="w-full flex-1 px-4 lg:px-12 2xl:px-24 mt-2">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8 w-full mx-auto pb-32">
                   {data.points.map((item, i) => (
                     <div key={i} className={`group flex flex-col rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 h-full border ${isDarkMode ? 'bg-[#0f172a] border-slate-800 shadow-[0_8px_30px_rgb(0,0,0,0.5)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.8)]' : 'bg-white border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.12)]'}`}>
@@ -536,7 +580,7 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
             </div>
           ) : (
             <div className="flex flex-col gap-12">
-              {sectionId !== 'education' && sectionId !== 'about' && (
+              {sectionId !== 'education' && sectionId !== 'about' && sectionId !== 'skill' && (
                 <div className="flex flex-col md:flex-row gap-8 items-start">
                   <div className={`w-20 h-20 md:w-24 md:h-24 rounded-3xl bg-gradient-to-br ${data.color} flex items-center justify-center shadow-[0_0_30px_rgba(59,130,246,0.3)] shrink-0`}>
                     <Icon size={44} className={isDarkMode ? 'text-white' : 'text-white'} />
@@ -564,7 +608,7 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
                     <TypewriterText text={data.description} delay={300} speed={15} />
                   </p>
                   
-                  <div className="flex flex-wrap justify-center gap-6 w-full">
+                  <div className="flex flex-wrap justify-center gap-12 w-full">
                     <a
                       href={resumeViewLink}
                       target="_blank"
@@ -590,9 +634,9 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
                 // Contact logic is now handled in the top conditional block
                 null
               ) : sectionId === 'education' ? (
-                <div className="flex flex-col min-h-screen w-full items-center pt-24 md:pt-32 px-4 md:px-8 pb-20">
+                <div className="flex flex-col min-h-screen w-full items-center pt-0 md:pt-0 px-4 md:px-8 pb-20">
                   {/* Hero Section */}
-                  <div className="w-full max-w-[1100px] mx-auto mb-16 bg-transparent rounded-[2.5rem] md:rounded-[3.5rem] py-12 px-6 md:px-16 flex flex-col items-center justify-center relative overflow-hidden">
+                  <div className="w-full max-w-[1100px] mx-auto mb-4 bg-transparent rounded-[2.5rem] md:rounded-[3.5rem] py-12 px-6 md:px-16 flex flex-col items-center justify-center relative overflow-hidden">
                     {/* Background Sparkles */}
                     <div className="absolute top-10 left-32 text-red-300 font-bold text-lg md:text-xl opacity-60">●</div>
                     <div className="absolute top-20 left-12 text-emerald-300 font-bold text-2xl md:text-3xl opacity-60">+</div>
@@ -606,7 +650,7 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
 
                     {/* Illustration */}
                     <div className="w-full md:w-[60%] flex justify-center relative z-10">
-                      <svg viewBox="0 25 400 250" className="w-[85%] sm:w-[70%] md:w-[85%] drop-shadow-xl z-20 mt-[-10px]">
+                      <svg viewBox="0 25 400 250" className="w-[60%] sm:w-[50%] md:w-[60%] drop-shadow-xl z-20 mt-[-10px]">
                         {/* Diploma */}
                         <g transform="translate(30, 140) rotate(-22)">
                           <rect x="0" y="0" width="300" height="40" rx="3" fill="#f4f5f5" />
@@ -637,7 +681,7 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
 
                   {/* Education Timeline */}
                   <div className="w-full flex-1 px-4 lg:px-12 2xl:px-24">
-                    <div className="relative max-w-5xl mx-auto pb-32 mt-10">
+                    <div className="relative max-w-5xl mx-auto pb-32 mt-0">
                       {/* Vertical Center Line */}
                       <div className="absolute left-6 md:left-1/2 md:-translate-x-1/2 top-4 bottom-0 w-1 bg-[#ff8c42]" />
 
@@ -747,108 +791,207 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
                   </div>
                 </div>
               ) : sectionId === 'skill' ? (
-                <div className="flex flex-col items-center justify-center min-h-[70vh] w-full overflow-hidden relative">
-                  
-                  {/* Orbit Animation Styles */}
-                  <style>{`
-                    @keyframes orbit {
-                      from { transform: rotate(0deg); }
-                      to { transform: rotate(360deg); }
-                    }
-                    @keyframes orbit-reverse {
-                      from { transform: rotate(360deg); }
-                      to { transform: rotate(0deg); }
-                    }
-                    .orbit-radius-1 { transform: translateY(-90px); }
-                    .orbit-radius-2 { transform: translateY(-135px); }
-                    @media (min-width: 768px) {
-                        .orbit-radius-1 { transform: translateY(-160px); }
-                        .orbit-radius-2 { transform: translateY(-240px); }
-                    }
-                  `}</style>
-                  
-                  {/* Rotating System Container */}
-                  <div className="relative w-[300px] h-[300px] md:w-[600px] md:h-[600px] flex items-center justify-center mt-20 md:mt-0">
-                    
-                    {/* Center Core */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-                      <div className="relative w-24 h-24 md:w-32 md:h-32 bg-white/5 backdrop-blur-md rounded-full flex items-center justify-center border border-white/10 shadow-[0_0_80px_rgba(79,70,229,0.3)] animate-[pulse_4s_ease-in-out_infinite]">
-                         <div className="absolute inset-0 rounded-full border border-indigo-500/20 animate-[ping_3s_linear_infinite]" />
-                         <div className="absolute inset-0 rounded-full border border-indigo-400/10 animate-[spin_10s_linear_infinite]" />
-                         <Cpu size={40} className="text-indigo-400 drop-shadow-[0_0_15px_rgba(99,102,241,0.8)] relative z-10 md:w-[50px] md:h-[50px]" />
-                         <div className="absolute -bottom-12 text-center w-40">
-                            <h3 className={`text-base font-black tracking-[0.3em] ${isDarkMode ? 'text-white' : 'text-slate-800'}`}>SKILLS</h3>
-                         </div>
-                      </div>
-                    </div>
+                <div className="w-full flex-1 px-4 lg:px-12 2xl:px-24">
+                   <style>{`
+                     @keyframes buttonGlow {
+                       0%, 100% { box-shadow: 0 8px 30px rgba(37, 99, 235, 0.18), inset 0 0 10px rgba(255,255,255,0.03); }
+                       50% { box-shadow: 0 20px 60px rgba(37, 99, 235, 0.28), inset 0 0 14px rgba(255,255,255,0.04); }
+                     }
+                     @keyframes buttonGlowPurple {
+                       0%, 100% { box-shadow: 0 8px 30px rgba(168, 85, 247, 0.16), inset 0 0 10px rgba(255,255,255,0.03); }
+                       50% { box-shadow: 0 20px 60px rgba(168, 85, 247, 0.26), inset 0 0 14px rgba(255,255,255,0.04); }
+                     }
+                     @keyframes buttonGlowPink {
+                       0%, 100% { box-shadow: 0 8px 30px rgba(236, 72, 153, 0.16), inset 0 0 10px rgba(255,255,255,0.03); }
+                       50% { box-shadow: 0 20px 60px rgba(236, 72, 153, 0.26), inset 0 0 14px rgba(255,255,255,0.04); }
+                     }
 
-                    {/* Orbit 1: Frontend (Inner) */}
-                    <div className="absolute inset-0 animate-[orbit_30s_linear_infinite] z-10 pointer-events-none">
-                        <div className="w-full h-full rounded-full border border-dashed border-indigo-500/10 absolute inset-0 scale-[0.6] md:scale-[0.53]" />
-                        {[
-                          { name: 'HTML', icon: FileCode, color: 'text-orange-500', glow: 'shadow-orange-500/50' },
-                          { name: 'CSS', icon: Palette, color: 'text-blue-500', glow: 'shadow-blue-500/50' },
-                          { name: 'JavaScript', icon: Code2, color: 'text-yellow-400', glow: 'shadow-yellow-400/50' },
-                        ].map((item, index, arr) => (
-                           <div key={index} className="absolute top-1/2 left-1/2 w-0 h-0 pointer-events-auto" 
-                                style={{ transform: `rotate(${index * (360/arr.length)}deg)` }}> 
-                                {/* 1. Rotate to angle */}
-                                <div className="orbit-radius-1 absolute top-0 left-0 flex items-center justify-center">
-                                   {/* 2. Translate out to radius - handled by class */}
-                                   <div style={{ transform: `rotate(-${index * (360/arr.length)}deg)` }}>
-                                      {/* 3. Counter-rotate placement */}
-                                      <div className="animate-[orbit-reverse_30s_linear_infinite]">
-                                          {/* 4. Counter-animate orbit */}
-                                          <div className={`flex flex-col items-center gap-2 group cursor-pointer transition-all hover:scale-125`}>
-                                              <div className={`w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-[#0f172a] border border-white/10 flex items-center justify-center shadow-lg ${item.glow} group-hover:border-white/30 transition-colors`}>
-                                                  <item.icon size={24} className={`${item.color} md:w-8 md:h-8`} />
-                                              </div>
-                                              <span className={`text-[10px] font-bold bg-black/40 px-2 py-0.5 rounded backdrop-blur-md text-white border border-white/5 opacity-0 group-hover:opacity-100 transition-opacity absolute -bottom-6 whitespace-nowrap`}>{item.name}</span>
-                                          </div>
-                                      </div>
+                     /* Base transparent pill style */
+                     .skill-btn-blue, .skill-btn-purple, .skill-btn-pink { position: relative; overflow: visible; }
+
+                     /* Dark glassy pill look to match design */
+                     .skill-btn-blue, .skill-btn-purple, .skill-btn-pink { color: #f8fafc; }
+
+                     .skill-btn-blue {
+                       animation: buttonGlow 2.8s ease-in-out infinite;
+                       background: linear-gradient(180deg, rgba(12,18,32,0.36), rgba(12,18,32,0.26));
+                       border: 1px solid rgba(255,255,255,0.06);
+                       backdrop-filter: blur(8px);
+                       -webkit-backdrop-filter: blur(8px);
+                       box-shadow: 0 10px 40px rgba(13,42,91,0.22), inset 0 1px 0 rgba(255,255,255,0.02);
+                       padding: 0.6rem 2.25rem;
+                     }
+
+                     .skill-btn-purple {
+                       animation: buttonGlowPurple 3.2s ease-in-out infinite;
+                       background: linear-gradient(180deg, rgba(18,12,28,0.34), rgba(18,12,28,0.24));
+                       border: 1px solid rgba(255,255,255,0.05);
+                       backdrop-filter: blur(8px);
+                       -webkit-backdrop-filter: blur(8px);
+                       box-shadow: 0 10px 40px rgba(62,25,80,0.18), inset 0 1px 0 rgba(255,255,255,0.02);
+                       padding: 0.6rem 2.25rem;
+                     }
+
+                     .skill-btn-pink {
+                       animation: buttonGlowPink 2.6s ease-in-out infinite;
+                       background: linear-gradient(180deg, rgba(28,12,18,0.34), rgba(28,12,18,0.24));
+                       border: 1px solid rgba(255,255,255,0.05);
+                       backdrop-filter: blur(8px);
+                       -webkit-backdrop-filter: blur(8px);
+                       box-shadow: 0 10px 40px rgba(91,24,47,0.18), inset 0 1px 0 rgba(255,255,255,0.02);
+                       padding: 0.6rem 2.25rem;
+                     }
+
+                     /* 3D tilt and perspective */
+                     .perspective-600 { perspective: 600px; }
+                     .perspective-600 > * { transform-style: preserve-3d; }
+                     .skill-btn-blue:hover, .skill-btn-purple:hover, .skill-btn-pink:hover { transform: translateY(-8px) rotateX(6deg) rotateY(3deg); }
+
+                     /* Animated outer ring (soft, blurred gradient) */
+                     .skill-btn-blue::before, .skill-btn-purple::before, .skill-btn-pink::before {
+                       content: '';
+                       position: absolute;
+                       inset: -10px;
+                       border-radius: 9999px;
+                       pointer-events: none;
+                       transition: opacity 300ms ease, transform 500ms ease;
+                       filter: blur(18px);
+                       opacity: 0.95;
+                     }
+                     .skill-btn-blue::before { background: conic-gradient(from 0deg, rgba(59,130,246,0.0), rgba(59,130,246,0.28)); animation: spin 6s linear infinite; transform: scale(0.98); }
+                     .skill-btn-purple::before { background: conic-gradient(from 0deg, rgba(168,85,247,0.0), rgba(168,85,247,0.24)); animation: spin 7s linear infinite; transform: scale(0.98); }
+                     .skill-btn-pink::before { background: conic-gradient(from 0deg, rgba(236,72,153,0.0), rgba(236,72,153,0.24)); animation: spin 5.5s linear infinite; transform: scale(0.98); }
+
+                     @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+                     /* Ripple effect */
+                     .ripple { position: absolute; border-radius: 50%; transform: scale(0); animation: ripple 650ms linear; background: rgba(255,255,255,0.12); pointer-events: none; }
+                     @keyframes ripple { to { transform: scale(4); opacity: 0; } }
+
+                     /* Shine stripe */
+                     .skill-btn-blue .shine, .skill-btn-purple .shine, .skill-btn-pink .shine { transition: transform 700ms ease; }
+
+                     /* Active button styling */
+                     .skill-active { transform: translateY(-6px) scale(1.02); border-color: rgba(255,255,255,0.12) !important; }
+                     .skill-btn-blue.skill-active::before, .skill-btn-purple.skill-active::before, .skill-btn-pink.skill-active::before { opacity: 1; filter: blur(24px); transform: scale(1); }
+
+                   `}</style>
+                   
+                   {/* Filter Buttons */}
+                   <div className="flex flex-wrap justify-center gap-6 mb-12 pt-4">
+                     <button onClick={() => setActiveFilter(prev => prev === 'technical' ? '' : 'technical')} onMouseDown={createRipple} type="button" aria-label="Technical Skills" className={`skill-btn-blue relative perspective-600 px-8 py-3 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold uppercase tracking-widest text-sm group hover:scale-110 hover:-translate-y-1 transition-all duration-300 border border-blue-400/30 ${activeFilter === 'technical' ? 'skill-active' : ''}`}>
+                       {/* Shine effect */}
+                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                       {/* Glow background */}
+                       <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-blue-500 rounded-full blur opacity-0 group-hover:opacity-50 transition-opacity duration-300 -z-10" />
+                       <span className="relative block group-hover:scale-105 transition-transform duration-300">Technical Skills</span>
+                     </button>
+                     
+                     <button onClick={() => setActiveFilter(prev => prev === 'tools' ? '' : 'tools')} onMouseDown={createRipple} type="button" aria-label="Tools" className={`skill-btn-purple relative perspective-600 px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 to-purple-500 text-white font-bold uppercase tracking-widest text-sm group hover:scale-110 hover:-translate-y-1 transition-all duration-300 border border-purple-400/30 ${activeFilter === 'tools' ? 'skill-active' : ''}`}>
+                       {/* Shine effect */}
+                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                       {/* Glow background */}
+                       <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-purple-500 rounded-full blur opacity-0 group-hover:opacity-50 transition-opacity duration-300 -z-10" />
+                       <span className="relative block group-hover:scale-105 transition-transform duration-300">Tools</span>
+                     </button>
+                     
+                     <button onClick={() => setActiveFilter(prev => prev === 'design' ? '' : 'design')} onMouseDown={createRipple} type="button" aria-label="Design Tools" className={`skill-btn-pink relative perspective-600 px-8 py-3 rounded-full bg-gradient-to-r from-pink-600 to-pink-500 text-white font-bold uppercase tracking-widest text-sm group hover:scale-110 hover:-translate-y-1 transition-all duration-300 border border-pink-400/30 ${activeFilter === 'design' ? 'skill-active' : ''}`}>
+                       {/* Shine effect */}
+                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                       {/* Glow background */}
+                       <div className="absolute -inset-1 bg-gradient-to-r from-pink-600 to-pink-500 rounded-full blur opacity-0 group-hover:opacity-50 transition-opacity duration-300 -z-10" />
+                       <span className="relative block group-hover:scale-105 transition-transform duration-300">Design Tools</span>
+                     </button>
+                   </div>
+                
+                   {activeFilter && (
+                     <div id="skill-timeline" className="relative max-w-5xl mx-auto pb-32 mt-10">
+                       {/* Vertical Center Line */}
+                       <div className="absolute left-6 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-orange-500 via-purple-600 to-blue-500 shadow-[0_0_20px_rgba(147,51,234,0.3)]" />
+
+                       <div className="flex flex-col gap-12 md:gap-24">
+                         {(skillSets[activeFilter] || []).map((item, i) => {
+                           const isLeft = i % 2 === 0;
+                           return (
+                             <div key={i} className="flex w-full relative">
+                               <div className="hidden md:flex w-full items-center justify-between">
+                                 {isLeft ? (
+                                   <>
+                                     <div className={`w-[45%] flex justify-end relative opacity-0 animate-[slideInLeft_0.8s_ease-out_forwards]`} style={{ animationDelay: `${i * 0.1}s` }}>
+                                       <div className={`absolute right-[-14%] top-1/2 w-[14%] h-[2px] bg-gradient-to-r from-transparent to-${item.bg.replace('bg-', '')}`} />
+                                       <div className={`absolute right-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 rounded-full ${item.bg} shadow-[0_0_10px_currentColor]`} />
+
+                                       <div className={`relative group w-full max-w-sm overflow-hidden rounded-2xl border ${item.border} bg-[#0f172a]/40 backdrop-blur-xl p-6 shadow-2xl ${item.shadow} hover:-translate-y-2 hover:scale-105 transition-all duration-300`}>
+                                         <div className={`absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 bg-gradient-to-br from-${item.color.replace('text-', '')} to-transparent`} />
+                                         <div className="flex items-center gap-6 relative z-10">
+                                           <div className={`p-4 rounded-xl bg-[#0f172a]/50 border ${item.border} group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 shadow-[0_0_20px_inset_rgba(255,255,255,0.05)]`}>
+                                             <item.icon size={44} className={`${item.color} drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]`} />
+                                           </div>
+                                           <div>
+                                             <h3 className={`text-3xl font-black ${item.color} uppercase tracking-tighter drop-shadow-sm`}>{item.name}</h3>
+                                             <p className="text-slate-400 text-sm font-bold uppercase tracking-widest mt-1 opacity-80 group-hover:opacity-100 transition-opacity">{item.desc}</p>
+                                           </div>
+                                         </div>
+                                         <div className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-${item.color.replace('text-', '')}/10 to-transparent rounded-bl-[3rem] transition-all group-hover:from-${item.color.replace('text-', '')}/20`} />
+                                       </div>
+                                     </div>
+
+                                     <div className="w-[10%] flex justify-center relative">
+                                       <div className={`w-6 h-6 rounded-full border-4 border-[#0f172a] z-20 ${item.bg} shadow-[0_0_20px_currentColor] animate-pulse`} />
+                                     </div>
+
+                                     <div className="w-[45%]" />
+                                   </>
+                                 ) : (
+                                   <>
+                                     <div className="w-[45%]" />
+                                     <div className="w-[10%] flex justify-center relative">
+                                       <div className={`w-6 h-6 rounded-full border-4 border-[#0f172a] z-20 ${item.bg} shadow-[0_0_20px_currentColor] animate-pulse`} />
+                                     </div>
+                                     <div className={`w-[45%] flex justify-start relative opacity-0 animate-[slideInRight_0.8s_ease-out_forwards]`} style={{ animationDelay: `${i * 0.1}s` }}>
+                                       <div className={`absolute left-[-14%] top-1/2 w-[14%] h-[2px] bg-gradient-to-l from-transparent to-${item.bg.replace('bg-', '')}`} />
+                                       <div className={`absolute left-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 rounded-full ${item.bg} shadow-[0_0_10px_currentColor]`} />
+                                       <div className={`relative group w-full max-w-sm overflow-hidden rounded-2xl border ${item.border} bg-[#0f172a]/40 backdrop-blur-xl p-6 shadow-2xl ${item.shadow} hover:-translate-y-2 hover:scale-105 transition-all duration-300`}>
+                                         <div className={`absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 bg-gradient-to-br from-${item.color.replace('text-', '')} to-transparent`} />
+                                         <div className="flex items-center gap-6 relative z-10">
+                                           <div className={`p-4 rounded-xl bg-[#0f172a]/50 border ${item.border} group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300 shadow-[0_0_20px_inset_rgba(255,255,255,0.05)]`}>
+                                             <item.icon size={44} className={`${item.color} drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]`} />
+                                           </div>
+                                           <div>
+                                             <h3 className={`text-3xl font-black ${item.color} uppercase tracking-tighter drop-shadow-sm`}>{item.name}</h3>
+                                             <p className="text-slate-400 text-sm font-bold uppercase tracking-widest mt-1 opacity-80 group-hover:opacity-100 transition-opacity">{item.desc}</p>
+                                           </div>
+                                         </div>
+                                         <div className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-${item.color.replace('text-', '')}/10 to-transparent rounded-bl-[3rem] transition-all group-hover:from-${item.color.replace('text-', '')}/20`} />
+                                       </div>
+                                     </div>
+                                   </>
+                                 )}
+                               </div>
+
+                               <div className={`md:hidden flex w-full items-center pl-10 relative opacity-0 animate-[slideInRight_0.8s_ease-out_forwards]`} style={{ animationDelay: `${i * 0.1}s` }}>
+                                 <div className="absolute left-[24px] top-1/2 -translate-y-1/2 w-[15px] h-[2px] bg-gradient-to-r from-transparent to-white/50" />
+                                 <div className={`absolute left-[6.5px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 border-[#0f172a] ${item.bg} shadow-[0_0_10px_currentColor] z-20 animate-pulse`} />
+
+                                 <div className={`relative group w-full overflow-hidden rounded-2xl border ${item.border} bg-[#0f172a]/60 backdrop-blur-md p-5 shadow-lg ${item.shadow} active:scale-95 transition-all duration-300`}>
+                                   <div className={`absolute -right-5 -top-5 w-24 h-24 rounded-full blur-[40px] opacity-20 ${item.bg} pointer-events-none`} />
+                                   <div className="flex items-center gap-4 relative z-10">
+                                     <div className={`p-3 rounded-lg bg-white/5 border ${item.border}`}>
+                                       <item.icon size={32} className={`${item.color} drop-shadow-md`} />
+                                     </div>
+                                     <div>
+                                       <h3 className={`text-xl font-black ${item.color} uppercase tracking-tighter`}>{item.name}</h3>
+                                       <p className="text-slate-400 text-xs font-bold uppercase tracking-widest">{item.desc}</p>
+                                     </div>
                                    </div>
-                                </div>
-                           </div>
-                        ))}
-                    </div>
-
-                    {/* Orbit 2: Tools (Outer) */}
-                    <div className="absolute inset-0 animate-[orbit_50s_linear_infinite] pointer-events-none">
-                        <div className="w-full h-full rounded-full border border-dashed border-indigo-500/5 absolute inset-0 scale-[0.9] md:scale-[0.8]" />
-                        {[
-                          { name: 'Vercel', icon: UploadCloud, color: 'text-white', glow: 'shadow-white/50' },
-                          { name: 'GitHub', icon: Github, color: 'text-gray-400', glow: 'shadow-gray-400/50' },
-                          { name: 'VS Code', icon: Terminal, color: 'text-blue-400', glow: 'shadow-blue-400/50' },
-                          { name: 'Excel', icon: Table, color: 'text-green-500', glow: 'shadow-green-500/50' },
-                          { name: 'Canva', icon: ImageIcon, color: 'text-purple-400', glow: 'shadow-purple-400/50' },
-                          { name: 'Google Sheet', icon: Grid, color: 'text-green-400', glow: 'shadow-green-400/50' },
-                        ].map((item, index, arr) => (
-                           <div key={index} className="absolute top-1/2 left-1/2 w-0 h-0 pointer-events-auto"
-                                style={{ transform: `rotate(${index * (360/arr.length)}deg)` }}>
-                                <div className="orbit-radius-2 absolute top-0 left-0 flex items-center justify-center">
-                                   <div style={{ transform: `rotate(-${index * (360/arr.length)}deg)` }}>
-                                      <div className="animate-[orbit-reverse_50s_linear_infinite]">
-                                          <div className={`flex flex-col items-center gap-2 group cursor-pointer transition-all hover:scale-125`}>
-                                              <div className={`w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-[#0f172a] border border-white/10 flex items-center justify-center shadow-lg ${item.glow} group-hover:border-white/30 transition-colors`}>
-                                                  <item.icon size={24} className={`${item.color} md:w-8 md:h-8`} />
-                                              </div>
-                                              <span className={`text-[10px] font-bold bg-black/40 px-2 py-0.5 rounded backdrop-blur-md text-white border border-white/5 opacity-0 group-hover:opacity-100 transition-opacity absolute -bottom-6 whitespace-nowrap`}>{item.name}</span>
-                                          </div>
-                                      </div>
-                                   </div>
-                                </div>
-                           </div>
-                        ))}
-                    </div>
-
-                    {/* Floating Decorative Elements */}
-                     <div className="absolute inset-0 animate-spin-slow pointer-events-none opacity-20">
-                        <div className="absolute top-10 left-10 w-2 h-2 bg-blue-400 rounded-full blur-[1px]" />
-                        <div className="absolute bottom-20 right-20 w-3 h-3 bg-purple-400 rounded-full blur-[2px]" />
-                        <div className="absolute top-1/2 right-10 w-1 h-1 bg-white rounded-full" />
+                                 </div>
+                               </div>
+                             </div>
+                           )
+                         })}
+                       </div>
                      </div>
-
-                  </div>
+                   )}
                 </div>
               ) : sectionId === 'project' ? (
                 <div className="w-full">
