@@ -159,6 +159,27 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
               link: 'https://chess-game-bw7l.vercel.app/',
               image: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1171&q=80'
             }
+            ,
+            {
+              title: 'InstaID Finder',
+              text: 'Instagram Profile Finder is a simple and interactive web application that allows users to search for Instagram profiles by entering a username. The application fetches and displays profile information in a clean and user-friendly interface.',
+              link: 'https://instagram-profile-finder-zeta.vercel.app/',
+              image: '/assets/instafinder.png'
+            }
+            ,
+            {
+              title: 'ZenPlan',
+              text: 'ZenPlan is a modern and interactive task management dashboard designed to help users stay productive and focused. It allows users to create daily tasks, set weekly goals, track progress, and review past performance — all in one clean and responsive interface.',
+              link: 'https://zen-plan-web.vercel.app/',
+              image: '/assets/zenplan.png'
+            }
+            ,
+            {
+              title: 'GitHub Profile Finder',
+              text: 'GitHub Profile Finder is a simple and user-friendly web application that allows users to search for any GitHub profile by entering a username. It fetches real-time data using the GitHub API and displays the user’s profile information in a clean and organized interface.',
+              link: 'https://github-profile-explorer-black.vercel.app/',
+              image: '/assets/githubfinder.png'
+            }
           ]
         };
       case 'education':
@@ -218,6 +239,14 @@ const ContentPage = ({ sectionId, isDarkMode, onClose }) => {
               text: 'Credential for advanced CSS styling, animations, and efficient UI design patterns.',
               link: 'https://drive.google.com/file/d/14hBslmZUmGPy_C6dejzvekHe3hOLWEz6/view?usp=sharing',
               image: 'https://images.unsplash.com/photo-1505685296765-3a2736de412f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80'
+            }
+            
+            ,
+            {
+              title: 'FreeCodeCamp',
+              text: 'I successfully completed the JavaScript Algorithms and Data Structures (Beta) Developer Certification from freeCodeCamp, representing approximately 300 hours of coursework and hands-on coding practice.',
+              link: 'https://drive.google.com/file/d/1aLgqMx4Lh6cr6hDDKt7G3ItFoqOaOW3p/view?usp=sharing',
+              image: '/assets/certificate-freecodecamp.png'
             }
           ]
         };
